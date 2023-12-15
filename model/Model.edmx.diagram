@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ebc172def1d41d482de9a9b501f5518" Name="Diagram1">
+        <EntityTypeShape EntityType="VP_PMModel.AdditionalServices" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.Clients" Width="1.5" PointX="1.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.ConstructionMaterials" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.ConstructionPhases" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.DesignerServices" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.FinancialData" Width="1.5" PointX="8.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.FinishingMaterials" Width="1.5" PointX="3.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.MaterialBatches" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.Objects" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.Orders" Width="1.5" PointX="3.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.Role" Width="1.5" PointX="9" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.SecurityServices" Width="1.5" PointX="8.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VP_PMModel.Workers" Width="1.5" PointX="11.25" PointY="9.625" IsExpanded="true" />
+        <AssociationConnector Association="VP_PMModel.FK__Additiona__Objec__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK_Orders_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK__MaterialB__Mater__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK_Objects_ConstructionMaterials" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK__Construct__Objec__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK__DesignerS__Objec__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK_FinancialData_Objects" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK_Objects_FinishingMaterials" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK__Objects__OrderID__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK__SecurityS__Objec__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK_Workers_Objects" ManuallyRouted="false" />
+        <AssociationConnector Association="VP_PMModel.FK_Workers_Role" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,892 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище VP_PMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdditionalServices">
+          <Key>
+            <PropertyRef Name="ID_AddService" />
+          </Key>
+          <Property Name="ID_AddService" Type="int" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="int" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="50" />
+          <Property Name="ClientSurname" Type="varchar" MaxLength="50" />
+          <Property Name="ClientPatronymic" Type="varchar" MaxLength="50" />
+          <Property Name="phoneNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Client_login" Type="varchar" MaxLength="50" />
+          <Property Name="Client_pswd" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ConstructionMaterials">
+          <Key>
+            <PropertyRef Name="ID_ConstMaterial" />
+          </Key>
+          <Property Name="ID_ConstMaterial" Type="int" Nullable="false" />
+          <Property Name="MaterialName" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="ConstructionPhases">
+          <Key>
+            <PropertyRef Name="ID_Phase" />
+          </Key>
+          <Property Name="ID_Phase" Type="int" Nullable="false" />
+          <Property Name="PhaseName" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Object" Type="int" />
+        </EntityType>
+        <EntityType Name="DesignerServices">
+          <Key>
+            <PropertyRef Name="ID_DesService" />
+          </Key>
+          <Property Name="ID_DesService" Type="int" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="DesServiceName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FinancialData">
+          <Key>
+            <PropertyRef Name="ID_FinancialData" />
+          </Key>
+          <Property Name="ID_FinancialData" Type="int" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="TaxAmount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="StatisticReport" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="FinishingMaterials">
+          <Key>
+            <PropertyRef Name="ID_FinMaterial" />
+          </Key>
+          <Property Name="ID_FinMaterial" Type="int" Nullable="false" />
+          <Property Name="MaterialName" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="MaterialBatches">
+          <Key>
+            <PropertyRef Name="ID_Batch" />
+          </Key>
+          <Property Name="ID_Batch" Type="int" Nullable="false" />
+          <Property Name="ID_ConstMaterial" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Objects">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="int" Nullable="false" />
+          <Property Name="ID_Order" Type="int" Nullable="false" />
+          <Property Name="ID_ConstMaterial" Type="int" Nullable="false" />
+          <Property Name="ID_FinMAterial" Type="int" Nullable="false" />
+          <Property Name="NameObject" Type="varchar" MaxLength="50" />
+          <Property Name="FoundationStatus" Type="varchar" MaxLength="20" />
+          <Property Name="FrameStatus" Type="varchar" MaxLength="20" />
+          <Property Name="RoofStatus" Type="varchar" MaxLength="20" />
+          <Property Name="InteriorStatus" Type="varchar" MaxLength="20" />
+          <Property Name="TechnicalControlStatus" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID_Order" />
+          </Key>
+          <Property Name="ID_Order" Type="int" Nullable="false" />
+          <Property Name="ID_Client" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SecurityServices">
+          <Key>
+            <PropertyRef Name="ID_SecService" />
+          </Key>
+          <Property Name="ID_SecService" Type="int" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="SecServiceName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="ID_Worker" />
+          </Key>
+          <Property Name="ID_Worker" Type="int" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="ID_Role" Type="int" />
+          <Property Name="WorkerName" Type="varchar" MaxLength="50" />
+          <Property Name="WorkerSurname" Type="varchar" MaxLength="50" />
+          <Property Name="WorkerPatronymic" Type="varchar" MaxLength="50" />
+          <Property Name="phoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="w_login" Type="varchar" MaxLength="50" />
+          <Property Name="w_pswd" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Additiona__Objec__4316F928">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="AdditionalServices" Type="Self.AdditionalServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="AdditionalServices">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Construct__Objec__46E78A0C">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="ConstructionPhases" Type="Self.ConstructionPhases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="ConstructionPhases">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DesignerS__Objec__4F7CD00D">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="DesignerServices" Type="Self.DesignerServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="DesignerServices">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MaterialB__Mater__3B75D760">
+          <End Role="ConstructionMaterials" Type="Self.ConstructionMaterials" Multiplicity="0..1" />
+          <End Role="MaterialBatches" Type="Self.MaterialBatches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConstructionMaterials">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Principal>
+            <Dependent Role="MaterialBatches">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objects__OrderID__3E52440B">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ID_Order" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="ID_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SecurityS__Objec__52593CB8">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="SecurityServices" Type="Self.SecurityServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="SecurityServices">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinancialData_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="FinancialData" Type="Self.FinancialData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="FinancialData">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_ConstructionMaterials">
+          <End Role="ConstructionMaterials" Type="Self.ConstructionMaterials" Multiplicity="1" />
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConstructionMaterials">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_FinishingMaterials">
+          <End Role="FinishingMaterials" Type="Self.FinishingMaterials" Multiplicity="1" />
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinishingMaterials">
+              <PropertyRef Name="ID_FinMaterial" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="ID_FinMAterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище VP_PMModelContainer">
+          <EntitySet Name="AdditionalServices" EntityType="Self.AdditionalServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConstructionMaterials" EntityType="Self.ConstructionMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConstructionPhases" EntityType="Self.ConstructionPhases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DesignerServices" EntityType="Self.DesignerServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FinancialData" EntityType="Self.FinancialData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FinishingMaterials" EntityType="Self.FinishingMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialBatches" EntityType="Self.MaterialBatches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Objects" EntityType="Self.Objects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecurityServices" EntityType="Self.SecurityServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Additiona__Objec__4316F928" Association="Self.FK__Additiona__Objec__4316F928">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="AdditionalServices" EntitySet="AdditionalServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Construct__Objec__46E78A0C" Association="Self.FK__Construct__Objec__46E78A0C">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="ConstructionPhases" EntitySet="ConstructionPhases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DesignerS__Objec__4F7CD00D" Association="Self.FK__DesignerS__Objec__4F7CD00D">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="DesignerServices" EntitySet="DesignerServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MaterialB__Mater__3B75D760" Association="Self.FK__MaterialB__Mater__3B75D760">
+            <End Role="ConstructionMaterials" EntitySet="ConstructionMaterials" />
+            <End Role="MaterialBatches" EntitySet="MaterialBatches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objects__OrderID__3E52440B" Association="Self.FK__Objects__OrderID__3E52440B">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SecurityS__Objec__52593CB8" Association="Self.FK__SecurityS__Objec__52593CB8">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="SecurityServices" EntitySet="SecurityServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinancialData_Objects" Association="Self.FK_FinancialData_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="FinancialData" EntitySet="FinancialData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_ConstructionMaterials" Association="Self.FK_Objects_ConstructionMaterials">
+            <End Role="ConstructionMaterials" EntitySet="ConstructionMaterials" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_FinishingMaterials" Association="Self.FK_Objects_FinishingMaterials">
+            <End Role="FinishingMaterials" EntitySet="FinishingMaterials" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_Objects" Association="Self.FK_Workers_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_Role" Association="Self.FK_Workers_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VP_PMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdditionalServices">
+          <Key>
+            <PropertyRef Name="ID_AddService" />
+          </Key>
+          <Property Name="ID_AddService" Type="Int32" Nullable="false" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK__Additiona__Objec__4316F928" FromRole="AdditionalServices" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="Int32" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClientSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClientPatronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Client_login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Client_pswd" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Clients" FromRole="Clients" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="ConstructionMaterials">
+          <Key>
+            <PropertyRef Name="ID_ConstMaterial" />
+          </Key>
+          <Property Name="ID_ConstMaterial" Type="Int32" Nullable="false" />
+          <Property Name="MaterialName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="MaterialBatches" Relationship="Self.FK__MaterialB__Mater__3B75D760" FromRole="ConstructionMaterials" ToRole="MaterialBatches" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_Objects_ConstructionMaterials" FromRole="ConstructionMaterials" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="ConstructionPhases">
+          <Key>
+            <PropertyRef Name="ID_Phase" />
+          </Key>
+          <Property Name="ID_Phase" Type="Int32" Nullable="false" />
+          <Property Name="PhaseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Object" Type="Int32" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK__Construct__Objec__46E78A0C" FromRole="ConstructionPhases" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="DesignerServices">
+          <Key>
+            <PropertyRef Name="ID_DesService" />
+          </Key>
+          <Property Name="ID_DesService" Type="Int32" Nullable="false" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="DesServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK__DesignerS__Objec__4F7CD00D" FromRole="DesignerServices" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="FinancialData">
+          <Key>
+            <PropertyRef Name="ID_FinancialData" />
+          </Key>
+          <Property Name="ID_FinancialData" Type="Int32" Nullable="false" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="TaxAmount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="StatisticReport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_FinancialData_Objects" FromRole="FinancialData" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="FinishingMaterials">
+          <Key>
+            <PropertyRef Name="ID_FinMaterial" />
+          </Key>
+          <Property Name="ID_FinMaterial" Type="Int32" Nullable="false" />
+          <Property Name="MaterialName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_Objects_FinishingMaterials" FromRole="FinishingMaterials" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="MaterialBatches">
+          <Key>
+            <PropertyRef Name="ID_Batch" />
+          </Key>
+          <Property Name="ID_Batch" Type="Int32" Nullable="false" />
+          <Property Name="ID_ConstMaterial" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="ConstructionMaterials" Relationship="Self.FK__MaterialB__Mater__3B75D760" FromRole="MaterialBatches" ToRole="ConstructionMaterials" />
+        </EntityType>
+        <EntityType Name="Objects">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="Int32" Nullable="false" />
+          <Property Name="ID_Order" Type="Int32" Nullable="false" />
+          <Property Name="ID_ConstMaterial" Type="Int32" Nullable="false" />
+          <Property Name="ID_FinMAterial" Type="Int32" Nullable="false" />
+          <Property Name="NameObject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FoundationStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FrameStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RoofStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="InteriorStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TechnicalControlStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AdditionalServices" Relationship="Self.FK__Additiona__Objec__4316F928" FromRole="Objects" ToRole="AdditionalServices" />
+          <NavigationProperty Name="ConstructionMaterials" Relationship="Self.FK_Objects_ConstructionMaterials" FromRole="Objects" ToRole="ConstructionMaterials" />
+          <NavigationProperty Name="ConstructionPhases" Relationship="Self.FK__Construct__Objec__46E78A0C" FromRole="Objects" ToRole="ConstructionPhases" />
+          <NavigationProperty Name="DesignerServices" Relationship="Self.FK__DesignerS__Objec__4F7CD00D" FromRole="Objects" ToRole="DesignerServices" />
+          <NavigationProperty Name="FinancialData" Relationship="Self.FK_FinancialData_Objects" FromRole="Objects" ToRole="FinancialData" />
+          <NavigationProperty Name="FinishingMaterials" Relationship="Self.FK_Objects_FinishingMaterials" FromRole="Objects" ToRole="FinishingMaterials" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Objects__OrderID__3E52440B" FromRole="Objects" ToRole="Orders" />
+          <NavigationProperty Name="SecurityServices" Relationship="Self.FK__SecurityS__Objec__52593CB8" FromRole="Objects" ToRole="SecurityServices" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK_Workers_Objects" FromRole="Objects" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID_Order" />
+          </Key>
+          <Property Name="ID_Order" Type="Int32" Nullable="false" />
+          <Property Name="ID_Client" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Orders_Clients" FromRole="Orders" ToRole="Clients" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK__Objects__OrderID__3E52440B" FromRole="Orders" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK_Workers_Role" FromRole="Role" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="SecurityServices">
+          <Key>
+            <PropertyRef Name="ID_SecService" />
+          </Key>
+          <Property Name="ID_SecService" Type="Int32" Nullable="false" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="SecServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK__SecurityS__Objec__52593CB8" FromRole="SecurityServices" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="ID_Worker" />
+          </Key>
+          <Property Name="ID_Worker" Type="Int32" Nullable="false" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="ID_Role" Type="Int32" />
+          <Property Name="WorkerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkerSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkerPatronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="w_login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="w_pswd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_Workers_Objects" FromRole="Workers" ToRole="Objects" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Workers_Role" FromRole="Workers" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__Additiona__Objec__4316F928">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="AdditionalServices" Type="Self.AdditionalServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="AdditionalServices">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MaterialB__Mater__3B75D760">
+          <End Role="ConstructionMaterials" Type="Self.ConstructionMaterials" Multiplicity="0..1" />
+          <End Role="MaterialBatches" Type="Self.MaterialBatches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConstructionMaterials">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Principal>
+            <Dependent Role="MaterialBatches">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_ConstructionMaterials">
+          <End Role="ConstructionMaterials" Type="Self.ConstructionMaterials" Multiplicity="1" />
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConstructionMaterials">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="ID_ConstMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Construct__Objec__46E78A0C">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="ConstructionPhases" Type="Self.ConstructionPhases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="ConstructionPhases">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DesignerS__Objec__4F7CD00D">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="DesignerServices" Type="Self.DesignerServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="DesignerServices">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinancialData_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="FinancialData" Type="Self.FinancialData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="FinancialData">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_FinishingMaterials">
+          <End Role="FinishingMaterials" Type="Self.FinishingMaterials" Multiplicity="1" />
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinishingMaterials">
+              <PropertyRef Name="ID_FinMaterial" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="ID_FinMAterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objects__OrderID__3E52440B">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ID_Order" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="ID_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SecurityS__Objec__52593CB8">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="SecurityServices" Type="Self.SecurityServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="SecurityServices">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdditionalServices" EntityType="Self.AdditionalServices" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="ConstructionMaterials" EntityType="Self.ConstructionMaterials" />
+          <EntitySet Name="ConstructionPhases" EntityType="Self.ConstructionPhases" />
+          <EntitySet Name="DesignerServices" EntityType="Self.DesignerServices" />
+          <EntitySet Name="FinancialData" EntityType="Self.FinancialData" />
+          <EntitySet Name="FinishingMaterials" EntityType="Self.FinishingMaterials" />
+          <EntitySet Name="MaterialBatches" EntityType="Self.MaterialBatches" />
+          <EntitySet Name="Objects" EntityType="Self.Objects" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="SecurityServices" EntityType="Self.SecurityServices" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" />
+          <AssociationSet Name="FK__Additiona__Objec__4316F928" Association="Self.FK__Additiona__Objec__4316F928">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="AdditionalServices" EntitySet="AdditionalServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MaterialB__Mater__3B75D760" Association="Self.FK__MaterialB__Mater__3B75D760">
+            <End Role="ConstructionMaterials" EntitySet="ConstructionMaterials" />
+            <End Role="MaterialBatches" EntitySet="MaterialBatches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_ConstructionMaterials" Association="Self.FK_Objects_ConstructionMaterials">
+            <End Role="ConstructionMaterials" EntitySet="ConstructionMaterials" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Construct__Objec__46E78A0C" Association="Self.FK__Construct__Objec__46E78A0C">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="ConstructionPhases" EntitySet="ConstructionPhases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DesignerS__Objec__4F7CD00D" Association="Self.FK__DesignerS__Objec__4F7CD00D">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="DesignerServices" EntitySet="DesignerServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinancialData_Objects" Association="Self.FK_FinancialData_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="FinancialData" EntitySet="FinancialData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_FinishingMaterials" Association="Self.FK_Objects_FinishingMaterials">
+            <End Role="FinishingMaterials" EntitySet="FinishingMaterials" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objects__OrderID__3E52440B" Association="Self.FK__Objects__OrderID__3E52440B">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SecurityS__Objec__52593CB8" Association="Self.FK__SecurityS__Objec__52593CB8">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="SecurityServices" EntitySet="SecurityServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_Objects" Association="Self.FK_Workers_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_Role" Association="Self.FK_Workers_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище VP_PMModelContainer" CdmEntityContainer="Entities1">
+          <EntitySetMapping Name="AdditionalServices">
+            <EntityTypeMapping TypeName="VP_PMModel.AdditionalServices">
+              <MappingFragment StoreEntitySet="AdditionalServices">
+                <ScalarProperty Name="ID_AddService" ColumnName="ID_AddService" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="VP_PMModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientSurname" ColumnName="ClientSurname" />
+                <ScalarProperty Name="ClientPatronymic" ColumnName="ClientPatronymic" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="Client_login" ColumnName="Client_login" />
+                <ScalarProperty Name="Client_pswd" ColumnName="Client_pswd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConstructionMaterials">
+            <EntityTypeMapping TypeName="VP_PMModel.ConstructionMaterials">
+              <MappingFragment StoreEntitySet="ConstructionMaterials">
+                <ScalarProperty Name="ID_ConstMaterial" ColumnName="ID_ConstMaterial" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConstructionPhases">
+            <EntityTypeMapping TypeName="VP_PMModel.ConstructionPhases">
+              <MappingFragment StoreEntitySet="ConstructionPhases">
+                <ScalarProperty Name="ID_Phase" ColumnName="ID_Phase" />
+                <ScalarProperty Name="PhaseName" ColumnName="PhaseName" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DesignerServices">
+            <EntityTypeMapping TypeName="VP_PMModel.DesignerServices">
+              <MappingFragment StoreEntitySet="DesignerServices">
+                <ScalarProperty Name="ID_DesService" ColumnName="ID_DesService" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="DesServiceName" ColumnName="DesServiceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FinancialData">
+            <EntityTypeMapping TypeName="VP_PMModel.FinancialData">
+              <MappingFragment StoreEntitySet="FinancialData">
+                <ScalarProperty Name="ID_FinancialData" ColumnName="ID_FinancialData" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="StatisticReport" ColumnName="StatisticReport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FinishingMaterials">
+            <EntityTypeMapping TypeName="VP_PMModel.FinishingMaterials">
+              <MappingFragment StoreEntitySet="FinishingMaterials">
+                <ScalarProperty Name="ID_FinMaterial" ColumnName="ID_FinMaterial" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialBatches">
+            <EntityTypeMapping TypeName="VP_PMModel.MaterialBatches">
+              <MappingFragment StoreEntitySet="MaterialBatches">
+                <ScalarProperty Name="ID_Batch" ColumnName="ID_Batch" />
+                <ScalarProperty Name="ID_ConstMaterial" ColumnName="ID_ConstMaterial" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Objects">
+            <EntityTypeMapping TypeName="VP_PMModel.Objects">
+              <MappingFragment StoreEntitySet="Objects">
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="ID_ConstMaterial" ColumnName="ID_ConstMaterial" />
+                <ScalarProperty Name="ID_FinMAterial" ColumnName="ID_FinMAterial" />
+                <ScalarProperty Name="NameObject" ColumnName="NameObject" />
+                <ScalarProperty Name="FoundationStatus" ColumnName="FoundationStatus" />
+                <ScalarProperty Name="FrameStatus" ColumnName="FrameStatus" />
+                <ScalarProperty Name="RoofStatus" ColumnName="RoofStatus" />
+                <ScalarProperty Name="InteriorStatus" ColumnName="InteriorStatus" />
+                <ScalarProperty Name="TechnicalControlStatus" ColumnName="TechnicalControlStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="VP_PMModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="VP_PMModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SecurityServices">
+            <EntityTypeMapping TypeName="VP_PMModel.SecurityServices">
+              <MappingFragment StoreEntitySet="SecurityServices">
+                <ScalarProperty Name="ID_SecService" ColumnName="ID_SecService" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="SecServiceName" ColumnName="SecServiceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VP_PMModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workers">
+            <EntityTypeMapping TypeName="VP_PMModel.Workers">
+              <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="ID_Worker" ColumnName="ID_Worker" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="WorkerName" ColumnName="WorkerName" />
+                <ScalarProperty Name="WorkerSurname" ColumnName="WorkerSurname" />
+                <ScalarProperty Name="WorkerPatronymic" ColumnName="WorkerPatronymic" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="w_login" ColumnName="w_login" />
+                <ScalarProperty Name="w_pswd" ColumnName="w_pswd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
