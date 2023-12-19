@@ -9,6 +9,6 @@
       Title = "Client" Background = "White" >
 
     <Grid>
-
+        <TextBlock x:Name="welcomeMessageTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Text="{Binding WelcomeMessage}" Width="510" />
     </Grid>
 </Page>

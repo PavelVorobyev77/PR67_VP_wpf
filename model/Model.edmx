@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище VP_PMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище VP_PMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdditionalServices">
           <Key>
             <PropertyRef Name="ID_AddService" />
@@ -29,7 +29,7 @@
           <Key>
             <PropertyRef Name="ID_ConstMaterial" />
           </Key>
-          <Property Name="ID_ConstMaterial" Type="int" Nullable="false" />
+          <Property Name="ID_ConstMaterial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaterialName" Type="varchar" MaxLength="50" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
@@ -63,9 +63,16 @@
           <Key>
             <PropertyRef Name="ID_FinMaterial" />
           </Key>
-          <Property Name="ID_FinMaterial" Type="int" Nullable="false" />
+          <Property Name="ID_FinMaterial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaterialName" Type="varchar" MaxLength="50" />
           <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="ID_Gender" />
+          </Key>
+          <Property Name="ID_Gender" Type="int" Nullable="false" />
+          <Property Name="NameGender" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MaterialBatches">
           <Key>
@@ -135,7 +142,8 @@
           <Property Name="WorkerPatronymic" Type="varchar" MaxLength="50" />
           <Property Name="phoneNumber" Type="varchar" MaxLength="50" />
           <Property Name="w_login" Type="varchar" MaxLength="50" />
-          <Property Name="w_pswd" Type="varchar" MaxLength="50" />
+          <Property Name="w_pswd" Type="varchar" MaxLength="150" />
+          <Property Name="ID_Gender" Type="int" />
         </EntityType>
         <Association Name="FK__Additiona__Objec__4316F928">
           <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
@@ -257,6 +265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Workers_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="ID_Gender" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="ID_Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Workers_Objects">
           <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
           <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
@@ -289,6 +309,7 @@
           <EntitySet Name="DesignerServices" EntityType="Self.DesignerServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FinancialData" EntityType="Self.FinancialData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FinishingMaterials" EntityType="Self.FinishingMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialBatches" EntityType="Self.MaterialBatches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Objects" EntityType="Self.Objects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -336,6 +357,10 @@
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_Workers_Gender" Association="Self.FK_Workers_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
           <AssociationSet Name="FK_Workers_Objects" Association="Self.FK_Workers_Objects">
             <End Role="Objects" EntitySet="Objects" />
             <End Role="Workers" EntitySet="Workers" />
@@ -345,8 +370,7 @@
             <End Role="Workers" EntitySet="Workers" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VP_PMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -502,9 +526,11 @@
           <Property Name="WorkerPatronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="phoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="w_login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="w_pswd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="w_pswd" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Objects" Relationship="Self.FK_Workers_Objects" FromRole="Workers" ToRole="Objects" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Workers_Role" FromRole="Workers" ToRole="Role" />
+          <Property Name="ID_Gender" Type="Int32" />
+          <NavigationProperty Name="Gender" Relationship="VP_PMModel.FK_Workers_Gender" FromRole="Workers" ToRole="Gender" />
         </EntityType>
         <Association Name="FK__Additiona__Objec__4316F928">
           <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
@@ -713,7 +739,32 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="Workers" EntitySet="Workers" />
           </AssociationSet>
+          <EntitySet Name="Gender" EntityType="VP_PMModel.Gender" />
+          <AssociationSet Name="FK_Workers_Gender" Association="VP_PMModel.FK_Workers_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="ID_Gender" />
+          </Key>
+          <Property Name="ID_Gender" Type="Int32" Nullable="false" />
+          <Property Name="NameGender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Workers" Relationship="VP_PMModel.FK_Workers_Gender" FromRole="Gender" ToRole="Workers" />
+        </EntityType>
+        <Association Name="FK_Workers_Gender">
+          <End Type="VP_PMModel.Gender" Role="Gender" Multiplicity="0..1" />
+          <End Type="VP_PMModel.Workers" Role="Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="ID_Gender" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="ID_Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -854,6 +905,7 @@
           <EntitySetMapping Name="Workers">
             <EntityTypeMapping TypeName="VP_PMModel.Workers">
               <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="ID_Gender" ColumnName="ID_Gender" />
                 <ScalarProperty Name="ID_Worker" ColumnName="ID_Worker" />
                 <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
                 <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
@@ -863,6 +915,14 @@
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
                 <ScalarProperty Name="w_login" ColumnName="w_login" />
                 <ScalarProperty Name="w_pswd" ColumnName="w_pswd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gender">
+            <EntityTypeMapping TypeName="VP_PMModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="NameGender" ColumnName="NameGender" />
+                <ScalarProperty Name="ID_Gender" ColumnName="ID_Gender" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

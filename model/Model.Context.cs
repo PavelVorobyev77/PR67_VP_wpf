@@ -39,5 +39,6 @@ namespace PR67_VP.model
         public virtual DbSet<SecurityServices> SecurityServices { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Workers> Workers { get; set; }
+        public virtual DbSet<Gender> Gender { get; set; }
     }
 }

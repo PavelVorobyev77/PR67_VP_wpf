@@ -60,6 +60,7 @@ namespace PR67_VP.Pages
                 countdownTimer.Stop();
                 isButtonBlocked = false;
                 btnEnter.IsEnabled = true;
+                btnEnterGuest.IsEnabled = true;
                 txtLogin.IsEnabled = true;
                 txtPassword.IsEnabled = true;
                 txtCaptcha.IsEnabled = true;
@@ -75,7 +76,7 @@ namespace PR67_VP.Pages
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            if (isButtonBlocked)
+            if (!IsAccessAllowed())
             {
                 MessageBox.Show("Кнопка входа заблокирована. Подождите, пока не истечет время блокировки.");
                 return;
@@ -93,10 +94,12 @@ namespace PR67_VP.Pages
 
                 if (worker != null)
                 {
-                    string welcomeMessage = $"Добро пожаловать, {worker.WorkerSurname} {worker.WorkerName} {worker.WorkerPatronymic} ({worker.Role.RoleName})!";
+                    // Получение приветственного сообщения с указанием времени суток
+                    string welcomeMessage = GetWelcomeMessage(worker);
                     MessageBox.Show(welcomeMessage);
                     countUnsuccessful = 0;
-                    LoadForm(worker.Role.RoleName);
+                    LoadForm(worker.Role.RoleName, welcomeMessage);
+
                 }
                 else
                 {
@@ -110,6 +113,59 @@ namespace PR67_VP.Pages
                     BlockLoginButton();
                 }
             }
+        }
+
+        private string GetWelcomeMessage(Workers worker)
+        {
+            string greeting = "";
+
+            // Определение времени суток
+            int currentHour = DateTime.Now.Hour;
+            if (currentHour >= 10 && currentHour <= 12)
+            {
+                greeting = "Доброе утро";
+            }
+            else if (currentHour >= 12 && currentHour <= 17)
+            {
+                greeting = "Добрый день";
+            }
+            else if (currentHour >= 17 && currentHour <= 19)
+            {
+                greeting = "Добрый вечер";
+            }
+
+            // Формирование фамилии и имени сотрудника
+            string fullName;
+            if (!string.IsNullOrEmpty(worker.WorkerPatronymic))
+            {
+                fullName = $"{worker.WorkerSurname} {worker.WorkerName} {worker.WorkerPatronymic}";
+            }
+            else
+            {
+                fullName = $"{worker.WorkerSurname} {worker.WorkerName}";
+            }
+
+            // Формирование приветственного сообщения с временем суток, приставкой (Mr/Mrs), и именем сотрудника
+            string welcomeMessage = $"{greeting}, {GetSalutation(worker)} {fullName} ({worker.Role.RoleName})!";
+            return welcomeMessage;
+        }
+
+        private string GetSalutation(Workers worker)
+        {
+            if (worker.ID_Gender == 1)
+            {
+                return "Mrs";
+            }
+            else
+            {
+                return "Mr";
+            }
+        }
+
+        private bool IsAccessAllowed()
+        {
+            int currentHour = DateTime.Now.Hour;
+            return currentHour >= 10 && currentHour < 19;
         }
 
         private void GenerateCaptcha()
@@ -141,20 +197,25 @@ namespace PR67_VP.Pages
             txtCaptcha.IsEnabled = false;
             isButtonBlocked = true;
             btnEnter.IsEnabled = false;
+            btnEnterGuest.IsEnabled = false;
             countdownTimer.Start();
         }
 
-        private void LoadForm(string role)
+        private void LoadForm(string role, string welcomeMessage)
         {
-            switch (role)
+            switch (role) 
             {
-                case "Админ":
-                case "Прораб":
-                case "Инженер":
-                    NavigationService.Navigate(new Admin());
+                case "Админ": //1
+                    NavigationService.Navigate(new Admin { WelcomeMessage = welcomeMessage });
                     break;
-                case "Клиент":
-                    NavigationService.Navigate(new Client());
+                case "Прораб": //2
+                    NavigationService.Navigate(new Pr { WelcomeMessage = welcomeMessage });
+                    break;
+                case "Инженер": //3
+                    NavigationService.Navigate(new In { WelcomeMessage = welcomeMessage });
+                    break;
+                case "Клиент": //4
+                    NavigationService.Navigate(new Client { WelcomeMessage = welcomeMessage });
                     break;
             }
         }

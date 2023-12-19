@@ -16,12 +16,12 @@ using System.Windows.Shapes;
 namespace PR67_VP.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Client.xaml
+    /// Логика взаимодействия для In.xaml
     /// </summary>
-    public partial class Client : Page
+    public partial class In : Page
     {
         public string WelcomeMessage { get; set; }
-        public Client()
+        public In()
         {
             InitializeComponent();
         }

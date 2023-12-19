@@ -12,21 +12,18 @@ namespace PR67_VP.model
     using System;
     using System.Collections.Generic;
     
-    public partial class Workers
+    public partial class Gender
     {
-        public int ID_Worker { get; set; }
-        public Nullable<int> ID_Object { get; set; }
-        public Nullable<int> ID_Role { get; set; }
-        public string WorkerName { get; set; }
-        public string WorkerSurname { get; set; }
-        public string WorkerPatronymic { get; set; }
-        public string phoneNumber { get; set; }
-        public string w_login { get; set; }
-        public string w_pswd { get; set; }
-        public Nullable<int> ID_Gender { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Gender()
+        {
+            this.Workers = new HashSet<Workers>();
+        }
     
-        public virtual Objects Objects { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual Gender Gender { get; set; }
+        public int ID_Gender { get; set; }
+        public string NameGender { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Workers> Workers { get; set; }
     }
 }

@@ -31,6 +31,8 @@
         <AssociationConnector Association="VP_PMModel.FK__SecurityS__Objec__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="VP_PMModel.FK_Workers_Objects" ManuallyRouted="false" />
         <AssociationConnector Association="VP_PMModel.FK_Workers_Role" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VP_PMModel.Gender" Width="1.5" PointX="3.375" PointY="0.875" />
+        <AssociationConnector Association="VP_PMModel.FK_Workers_Gender" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
