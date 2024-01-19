@@ -284,6 +284,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\icona.ico" />
     <Resource Include="Resources\photo.png" />
     <Resource Include="Resources\user.png" />
     <Resource Include="Resources\loop.png" />

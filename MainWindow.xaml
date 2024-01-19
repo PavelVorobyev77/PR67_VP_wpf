@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PR67_VP"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Cursor="">
+        Title="MainWindow" Height="450" Width="800" Cursor="" Icon="/Resources/icona.ico">
     <Grid Cursor="">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
