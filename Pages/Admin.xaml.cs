@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PR67_VP.model;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +22,18 @@ namespace PR67_VP.Pages
     /// </summary>
     public partial class Admin : Page
     {
+
         public string WelcomeMessage { get; set; }
+
         public Admin()
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Workers_Page());
+        }
     }
 }
+

@@ -129,7 +129,7 @@ namespace PR67_VP.Pages
             {
                 greeting = "Добрый день";
             }
-            else if (currentHour >= 17 && currentHour <= 19)
+            else if (currentHour >= 17 && currentHour <= 23)
             {
                 greeting = "Добрый вечер";
             }
@@ -165,7 +165,7 @@ namespace PR67_VP.Pages
         private bool IsAccessAllowed()
         {
             int currentHour = DateTime.Now.Hour;
-            return currentHour >= 10 && currentHour < 19;
+            return currentHour >= 10 && currentHour < 23;
         }
 
         private void GenerateCaptcha()

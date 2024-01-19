@@ -134,16 +134,16 @@
           <Key>
             <PropertyRef Name="ID_Worker" />
           </Key>
-          <Property Name="ID_Worker" Type="int" Nullable="false" />
+          <Property Name="ID_Worker" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_Object" Type="int" />
           <Property Name="ID_Role" Type="int" />
-          <Property Name="WorkerName" Type="varchar" MaxLength="50" />
-          <Property Name="WorkerSurname" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Gender" Type="int" />
+          <Property Name="WorkerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="WorkerSurname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="WorkerPatronymic" Type="varchar" MaxLength="50" />
           <Property Name="phoneNumber" Type="varchar" MaxLength="50" />
-          <Property Name="w_login" Type="varchar" MaxLength="50" />
-          <Property Name="w_pswd" Type="varchar" MaxLength="150" />
-          <Property Name="ID_Gender" Type="int" />
+          <Property Name="w_login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="w_pswd" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <Association Name="FK__Additiona__Objec__4316F928">
           <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
@@ -521,12 +521,12 @@
           <Property Name="ID_Worker" Type="Int32" Nullable="false" />
           <Property Name="ID_Object" Type="Int32" />
           <Property Name="ID_Role" Type="Int32" />
-          <Property Name="WorkerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WorkerSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WorkerSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="WorkerPatronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="phoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="w_login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="w_pswd" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="w_login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="w_pswd" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Objects" Relationship="Self.FK_Workers_Objects" FromRole="Workers" ToRole="Objects" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Workers_Role" FromRole="Workers" ToRole="Role" />
           <Property Name="ID_Gender" Type="Int32" />
