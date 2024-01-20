@@ -38,16 +38,6 @@ namespace PR67_VP.Pages
             }
         }
 
-        private void lvWorkers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // Обработка события выбора элемента
-        }
-
-        private void lvWorkers_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            // Обработка события двойного щелчка мыши
-        }
-
         private void txtSearch_TextChanged_1(object sender, TextChangedEventArgs e)
         {
             string searchText = txtSearch.Text.ToLower();
