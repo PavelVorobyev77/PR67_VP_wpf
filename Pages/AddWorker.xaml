@@ -26,14 +26,15 @@
         </Grid>
 
         <StackPanel Grid.Row="1" Margin="10">
-            <StackPanel Orientation="Horizontal" Height="42">
-                <Label Content="Имя: *" Width="156"/>
-                <TextBox x:Name="txtWorkerName" Width="187" Text="{Binding WorkerName}" Height="32"/>
-            </StackPanel>
 
             <StackPanel Orientation="Horizontal" Height="42">
                 <Label Content="Фамилия: *" Width="156"/>
                 <TextBox x:Name="txtWorkerSurname" Margin="5,0,0,0" Width="186" Text="{Binding WorkerSurname}" Height="32"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Height="42">
+                <Label Content="Имя: *" Width="156"/>
+                <TextBox x:Name="txtWorkerName" Width="187" Text="{Binding WorkerName}" Height="32"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Height="42">

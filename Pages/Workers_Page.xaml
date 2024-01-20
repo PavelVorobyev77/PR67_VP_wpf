@@ -25,10 +25,10 @@
         <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" TextChanged="txtSearch_TextChanged_1" Height="22"/>
         <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="cmbSorting_SelectionChanged" Height="36">
             <ComboBoxItem Content="Без сортировки"/>
-            <ComboBoxItem Content="Сортировка по имени (возрастание)" Tag="WorkerSurname,Ascending"/>
-            <ComboBoxItem Content="Сортировка по имени (убывание)" Tag="WorkerSurname,Descending"/>
-            <ComboBoxItem Content="Сортировка по фамилии (возрастание)" Tag="WorkerName,Ascending"/>
-            <ComboBoxItem Content="Сортировка по фамилии (убывание)" Tag="WorkerName,Descending"/>
+            <ComboBoxItem Content="Сортировка по имени (возрастание)" Tag="WorkerName,Ascending"/>
+            <ComboBoxItem Content="Сортировка по имени (убывание)" Tag="WorkerName,Descending"/>
+            <ComboBoxItem Content="Сортировка по фамилии (возрастание)" Tag="WorkerSurname,Ascending"/>
+            <ComboBoxItem Content="Сортировка по фамилии (убывание)" Tag="WorkerSurname,Descending"/>
             <ComboBoxItem Content="Сортировка по отчеству (возрастание)" Tag="WorkerPatronymic,Ascending"/>
             <ComboBoxItem Content="Сортировка по отчеству (убывание)" Tag="WorkerPatronymic,Descending"/>
             <ComboBoxItem Content="Сортировка по логину (возрастание)" Tag="w_login,Ascending"/>
@@ -61,8 +61,8 @@
 
                             <StackPanel Grid.Row="1" Margin="5">
 
-                                <TextBlock Text="{Binding WorkerName}" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding WorkerSurname}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding WorkerName}" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding WorkerPatronymic}" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding phoneNumber}" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding w_login}" VerticalAlignment="Center"/>
