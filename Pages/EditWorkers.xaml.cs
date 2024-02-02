@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using hash_pswd;
+using Microsoft.Win32;
 using PR67_VP.model;
 using System;
 using System.Collections.Generic;
@@ -53,8 +54,6 @@ namespace PR67_VP.Pages
                         txtWorkerPatronymic.Text = worker.WorkerPatronymic;
                         txtPhoneNumber.Text = worker.phoneNumber;
                         txtLogin.Text = worker.w_login;
-                        txtPassword.Text = worker.w_pswd;
-                        context.Entry(worker).State = EntityState.Modified;
                         
                     }
                     else
@@ -97,8 +96,7 @@ namespace PR67_VP.Pages
             if (string.IsNullOrWhiteSpace(txtId.Text) ||
                 string.IsNullOrWhiteSpace(txtWorkerName.Text) ||
                 string.IsNullOrWhiteSpace(txtWorkerSurname.Text) ||
-                string.IsNullOrWhiteSpace(txtLogin.Text) ||
-                string.IsNullOrWhiteSpace(txtPassword.Text))
+                string.IsNullOrWhiteSpace(txtLogin.Text))
             {
                 MessageBox.Show("Заполните все поля перед сохранением.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -117,36 +115,28 @@ namespace PR67_VP.Pages
 
                 if (selectedWorker != null)
                 {
-                    // Обновление существующего сотрудника
                     selectedWorker.WorkerName = txtWorkerName.Text;
                     selectedWorker.WorkerSurname = txtWorkerSurname.Text;
                     selectedWorker.WorkerPatronymic = txtWorkerPatronymic.Text;
                     selectedWorker.phoneNumber = txtPhoneNumber.Text;
                     selectedWorker.w_login = txtLogin.Text;
-                    selectedWorker.w_pswd = txtPassword.Text;
 
-                    context.Entry(selectedWorker).State = EntityState.Modified;
+                    if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                    {
+                        // Если поле с паролем заполнено, хэшируем пароль и сохраняем в БД
+                        string hashedPassword = hash.HashPassword(txtPassword.Text);
+                        selectedWorker.w_pswd = hashedPassword;
+                    }
+
+                    context.SaveChanges();
+
+                    MessageBox.Show("Данные сохранены успешно.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    // Добавление нового сотрудника
-                    Workers newWorker = new Workers
-                    {
-                        ID_Worker = idWorker,
-                        WorkerName = txtWorkerName.Text,
-                        WorkerSurname = txtWorkerSurname.Text,
-                        WorkerPatronymic = txtWorkerPatronymic.Text,
-                        phoneNumber = txtPhoneNumber.Text,
-                        w_login = txtLogin.Text,
-                        w_pswd = txtPassword.Text
-                    };
-
-                    context.Workers.Add(newWorker);
+                    // Сотрудник не найден
+                    MessageBox.Show("Выбранный сотрудник не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                context.SaveChanges();
-
-                MessageBox.Show("Данные сохранены успешно.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
