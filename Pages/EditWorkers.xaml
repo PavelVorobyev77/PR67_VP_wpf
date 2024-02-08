@@ -59,7 +59,7 @@
 
             <StackPanel Orientation="Horizontal" Height="42">
                 <Label Content="Пароль: *" Width="156"/>
-                <TextBox x:Name="txtPassword" Margin="5,0,0,0" Width="187" Text="{Binding w_pswd}" Height="32"/>
+                <TextBox x:Name="txtPassword" Margin="5,0,0,0" Width="187" Text="" Height="32"/>
             </StackPanel>
         </StackPanel>
 

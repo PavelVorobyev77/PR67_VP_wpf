@@ -35,28 +35,25 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtWorkerName.Text) ||
-                string.IsNullOrWhiteSpace(txtWorkerSurname.Text) ||
-                string.IsNullOrWhiteSpace(txtPhoneNumber.Text) ||
-                string.IsNullOrWhiteSpace(txtLogin.Text) ||
-                string.IsNullOrWhiteSpace(txtPswd.Text))
+            Workers newWorker = new Workers
             {
-                MessageBox.Show("Заполните все обязательные поля перед сохранением.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                WorkerName = txtWorkerName.Text,
+                WorkerSurname = txtWorkerSurname.Text,
+                WorkerPatronymic = txtWorkerPatronymic.Text,
+                phoneNumber = txtPhoneNumber.Text,
+                w_login = txtLogin.Text,
+                w_pswd = hash.HashPassword(txtPswd.Text)
+            };
+
+            string validationMessage = newWorker.Validate();
+            if (!string.IsNullOrEmpty(validationMessage))
+            {
+                MessageBox.Show(validationMessage, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             try
             {
-                Workers newWorker = new Workers
-                {
-                    WorkerName = txtWorkerName.Text,
-                    WorkerSurname = txtWorkerSurname.Text,
-                    WorkerPatronymic = txtWorkerPatronymic.Text,
-                    phoneNumber = txtPhoneNumber.Text,
-                    w_login = txtLogin.Text,
-                    w_pswd = hash.HashPassword(txtPswd.Text)
-                };
-
                 context.Workers.Add(newWorker);
                 context.SaveChanges();
 

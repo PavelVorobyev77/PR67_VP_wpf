@@ -46,17 +46,7 @@ namespace PR67_VP.Pages
                 Workers worker = context.Workers.Find(workerId);
                 try
                 {
-                    if (worker != null)
-                    {
-                        txtId.Text = worker.ID_Worker.ToString();
-                        txtWorkerName.Text = worker.WorkerName;
-                        txtWorkerSurname.Text = worker.WorkerSurname;
-                        txtWorkerPatronymic.Text = worker.WorkerPatronymic;
-                        txtPhoneNumber.Text = worker.phoneNumber;
-                        txtLogin.Text = worker.w_login;
-                        
-                    }
-                    else
+                    if (worker == null)
                     {
                         // Сотрудник не найден, можно обработать этот сценарий
                         // Например, можно вывести сообщение или очистить поля ввода
@@ -93,54 +83,45 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtId.Text) ||
-                string.IsNullOrWhiteSpace(txtWorkerName.Text) ||
-                string.IsNullOrWhiteSpace(txtWorkerSurname.Text) ||
-                string.IsNullOrWhiteSpace(txtLogin.Text))
+
+            if (!int.TryParse(txtId.Text, out int idWorker) || idWorker <= 0)
             {
-                MessageBox.Show("Заполните все поля перед сохранением.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Введите корректное числовое значение для ID.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if (!int.TryParse(txtId.Text, out int idWorker))
-            {
-                MessageBox.Show("Пожалуйста, введите корректное числовое значение для ID.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            Workers selectedWorker = context.Workers.FirstOrDefault(w => w.ID_Worker == idWorker);
 
-            try
+            if (selectedWorker != null)
             {
-                // Проверка, существует ли уже такой сотрудник
-                Workers selectedWorker = context.Workers.FirstOrDefault(w => w.ID_Worker == idWorker);
+                selectedWorker.WorkerName = txtWorkerName.Text;
+                selectedWorker.WorkerSurname = txtWorkerSurname.Text;
+                selectedWorker.WorkerPatronymic = txtWorkerPatronymic.Text;
+                selectedWorker.phoneNumber = txtPhoneNumber.Text;
+                selectedWorker.w_login = txtLogin.Text;
 
-                if (selectedWorker != null)
+                if (!string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
-                    selectedWorker.WorkerName = txtWorkerName.Text;
-                    selectedWorker.WorkerSurname = txtWorkerSurname.Text;
-                    selectedWorker.WorkerPatronymic = txtWorkerPatronymic.Text;
-                    selectedWorker.phoneNumber = txtPhoneNumber.Text;
-                    selectedWorker.w_login = txtLogin.Text;
+                    string hashedPassword = hash.HashPassword(txtPassword.Text);
+                    selectedWorker.w_pswd = hashedPassword;
+                }
 
-                    if (!string.IsNullOrWhiteSpace(txtPassword.Text))
-                    {
-                        // Если поле с паролем заполнено, хэшируем пароль и сохраняем в БД
-                        string hashedPassword = hash.HashPassword(txtPassword.Text);
-                        selectedWorker.w_pswd = hashedPassword;
-                    }
+                string validationMessage = selectedWorker.ValidateEdit();
+                if (!string.IsNullOrEmpty(validationMessage))
+                {
+                    MessageBox.Show(validationMessage, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
+                try
+                {
                     context.SaveChanges();
-
                     MessageBox.Show("Данные сохранены успешно.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                else
+                catch (Exception ex)
                 {
-                    // Сотрудник не найден
-                    MessageBox.Show("Выбранный сотрудник не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Произошла ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Произошла ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
