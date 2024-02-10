@@ -4,6 +4,7 @@ using PR67_VP.model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static PR67_VP.model.Workers;
+using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
 
 namespace PR67_VP.Pages
 {
@@ -83,7 +86,6 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-
             if (!int.TryParse(txtId.Text, out int idWorker) || idWorker <= 0)
             {
                 MessageBox.Show("Введите корректное числовое значение для ID.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -94,23 +96,38 @@ namespace PR67_VP.Pages
 
             if (selectedWorker != null)
             {
-                selectedWorker.WorkerName = txtWorkerName.Text;
-                selectedWorker.WorkerSurname = txtWorkerSurname.Text;
-                selectedWorker.WorkerPatronymic = txtWorkerPatronymic.Text;
-                selectedWorker.phoneNumber = txtPhoneNumber.Text;
-                selectedWorker.w_login = txtLogin.Text;
+                EditWorkersValidation editedWorker = new EditWorkersValidation
+                {
+                    WorkerName = txtWorkerName.Text,
+                    WorkerSurname = txtWorkerSurname.Text,
+                    WorkerPatronymic = txtWorkerPatronymic.Text,
+                    phoneNumber = txtPhoneNumber.Text,
+                    w_login = txtLogin.Text,
+                    w_pswd = txtPassword.Text
+                };
+
+                // Получение ошибок валидации
+                var validationContext = new ValidationContext(editedWorker, serviceProvider: null, items: null);
+                var validationResults = new List<ValidationResult>();
+                Validator.TryValidateObject(editedWorker, validationContext, validationResults, validateAllProperties: true);
+
+                if (validationResults.Any())
+                {
+                    string errorMessages = string.Join("\n", validationResults.Select(r => r.ErrorMessage));
+                    MessageBox.Show(errorMessages, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                selectedWorker.WorkerName = editedWorker.WorkerName;
+                selectedWorker.WorkerSurname = editedWorker.WorkerSurname;
+                selectedWorker.WorkerPatronymic = editedWorker.WorkerPatronymic;
+                selectedWorker.phoneNumber = editedWorker.phoneNumber;
+                selectedWorker.w_login = editedWorker.w_login;
 
                 if (!string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
                     string hashedPassword = hash.HashPassword(txtPassword.Text);
                     selectedWorker.w_pswd = hashedPassword;
-                }
-
-                string validationMessage = selectedWorker.ValidateEdit();
-                if (!string.IsNullOrEmpty(validationMessage))
-                {
-                    MessageBox.Show(validationMessage, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
                 }
 
                 try

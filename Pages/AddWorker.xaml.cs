@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using PR67_VP.model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static PR67_VP.model.Workers;
+using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
 
 namespace PR67_VP.Pages
 {
@@ -25,7 +28,7 @@ namespace PR67_VP.Pages
     {
         private Entities1 context;
 
-        public bool DialogResult { get; set; } // Add this property to the class
+        public bool DialogResult { get; set; }
 
         public AddWorker()
         {
@@ -35,26 +38,38 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Workers newWorker = new Workers
+            Workers.AddWorkersValidation newWorker = new Workers.AddWorkersValidation
             {
                 WorkerName = txtWorkerName.Text,
                 WorkerSurname = txtWorkerSurname.Text,
-                WorkerPatronymic = txtWorkerPatronymic.Text,
                 phoneNumber = txtPhoneNumber.Text,
                 w_login = txtLogin.Text,
                 w_pswd = hash.HashPassword(txtPswd.Text)
             };
 
-            string validationMessage = newWorker.Validate();
-            if (!string.IsNullOrEmpty(validationMessage))
+            // Получение ошибок валидации
+            var validationContext = new ValidationContext(newWorker, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+            Validator.TryValidateObject(newWorker, validationContext, validationResults, validateAllProperties: true);
+
+            if (validationResults.Any())
             {
-                MessageBox.Show(validationMessage, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
+                string errorMessages = string.Join("\n", validationResults.Select(r => r.ErrorMessage));
+                MessageBox.Show(errorMessages, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             try
             {
-                context.Workers.Add(newWorker);
+                context.Workers.Add(new Workers
+                {
+                    WorkerName = newWorker.WorkerName,
+                    WorkerSurname = newWorker.WorkerSurname,
+                    phoneNumber = newWorker.phoneNumber,
+                    w_login = newWorker.w_login,
+                    w_pswd = newWorker.w_pswd
+                });
+
                 context.SaveChanges();
 
                 DialogResult = true;

@@ -43,7 +43,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Height="42">
-                <Label Content="Номер телефона:" Width="156"/>
+                <Label Content="Номер телефона: *" Width="156"/>
                 <TextBox x:Name="txtPhoneNumber" Margin="5,0,0,0" Width="187" Text="{Binding phoneNumber}" Height="32"/>
             </StackPanel>
 

@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace PR67_VP.model
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class Workers
     {
         public int ID_Worker { get; set; }
@@ -24,66 +24,61 @@ namespace PR67_VP.model
         public string w_login { get; set; }
         public string w_pswd { get; set; }
         public Nullable<int> ID_Gender { get; set; }
-    
+
         public virtual Objects Objects { get; set; }
         public virtual Role Role { get; set; }
         public virtual Gender Gender { get; set; }
 
-        public string Validate()
+        // Валидации для формы AddWorkers
+        public class AddWorkersValidation
         {
-            if (string.IsNullOrWhiteSpace(WorkerName) ||
-                string.IsNullOrWhiteSpace(WorkerSurname) ||
-                string.IsNullOrWhiteSpace(phoneNumber) ||
-                string.IsNullOrWhiteSpace(w_login) ||
-                string.IsNullOrWhiteSpace(w_pswd))
-            {
-                return "Заполните все обязательные поля.";
-            }
+            [Required(ErrorMessage = "Имя работника является обязательным полем.")]
+            [StringLength(50, MinimumLength = 3, ErrorMessage = "Имя работника должно быть от 3 до 50 символов.")]
+            public string WorkerName { get; set; }
 
-            if (w_login.Length < 4 || w_login.Length > 20 || !IsLoginValid(w_login))
-            {
-                return "Логин должен содержать от 4 до 20 символов и содержать только буквы, цифры и символы: _, -";
-            }
+            [Required(ErrorMessage = "Фамилия работника является обязательным полем.")]
+            [StringLength(50, MinimumLength = 3, ErrorMessage = "Фамилия работника должна быть от 3 до 50 символов.")]
+            public string WorkerSurname { get; set; }
 
-            if (!IsValidPhoneNumber(phoneNumber))
-            {
-                return "Неверный формат номера телефона. Номер должен начинаться с +7 или 8 и содержать ровно 11 цифр.";
-            }
+            public string WorkerPatronymic { get; set; } // Необязательное поле
 
-            return null; // Возвращаем null, если валидация прошла успешно
+            [Required(ErrorMessage = "Номер телефона является обязательным полем.")]
+            [RegularExpression(@"^(\+7|8)[0-9]{10}$", ErrorMessage = "Неверный формат номера телефона. Номер должен начинаться с +7 или 8 и содержать ровно 11 цифр.")]
+            public string phoneNumber { get; set; }
+
+            [Required(ErrorMessage = "Логин является обязательным полем.")]
+            [StringLength(20, MinimumLength = 4, ErrorMessage = "Логин должен содержать от 4 до 20 символов.")]
+            [RegularExpression(@"^[\w-]+$", ErrorMessage = "Логин должен содержать только буквы, цифры и символы: _, -")]
+            public string w_login { get; set; }
+
+            [Required(ErrorMessage = "Пароль является обязательным полем.")]
+            public string w_pswd { get; set; }
+            public Nullable<int> ID_Gender { get; set; }
         }
 
-        private bool IsLoginValid(string login)
+        // Валидации для формы EditWorkers
+        public class EditWorkersValidation
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(login, @"^[\w-]+$");
-        }
+            [Required(ErrorMessage = "Имя сотрудника обязательно для заполнения.")]
+            [StringLength(50, MinimumLength = 3, ErrorMessage = "Имя сотрудника должно быть от 3 до 50 символов.")]
+            public string WorkerName { get; set; }
 
-        private bool IsValidPhoneNumber(string phoneNumber)
-        {
-            return System.Text.RegularExpressions.Regex.IsMatch(phoneNumber, @"^(\+7|8)[0-9]{10}$");
-        }
+            [Required(ErrorMessage = "Фамилия работника является обязательным полем.")]
+            [StringLength(50, MinimumLength = 3, ErrorMessage = "Фамилия работника должна быть от 3 до 50 символов.")]
+            public string WorkerSurname { get; set; }
 
-        public string ValidateEdit()
-        {
-            if (string.IsNullOrWhiteSpace(WorkerName) ||
-                string.IsNullOrWhiteSpace(WorkerSurname) ||
-                string.IsNullOrWhiteSpace(phoneNumber) ||
-                string.IsNullOrWhiteSpace(w_login))
-            {
-                return "Заполните все обязательные поля.";
-            }
+            public string WorkerPatronymic { get; set; } // Необязательное поле
 
-            if (w_login.Length < 4 || w_login.Length > 20 || !IsLoginValid(w_login))
-            {
-                return "Логин должен содержать от 4 до 20 символов и содержать только буквы, цифры и символы: _, -";
-            }
+            [Required(ErrorMessage = "Номер телефона является обязательным полем.")]
+            [RegularExpression(@"^(\+7|8)[0-9]{10}$", ErrorMessage = "Неверный формат номера телефона. Номер должен начинаться с +7 или 8 и содержать ровно 11 цифр.")]
+            public string phoneNumber { get; set; }
 
-            if (!IsValidPhoneNumber(phoneNumber))
-            {
-                return "Неверный формат номера телефона. Номер должен начинаться с +7 или 8 и содержать ровно 11 цифр.";
-            }
+            [Required(ErrorMessage = "Логин является обязательным полем.")]
+            [StringLength(20, MinimumLength = 4, ErrorMessage = "Логин должен содержать от 4 до 20 символов.")]
+            [RegularExpression(@"^[\w-]+$", ErrorMessage = "Логин должен содержать только буквы, цифры и символы: _, -")]
+            public string w_login { get; set; }
 
-            return null; // Возвращаем null, если валидация прошла успешно
+            public string w_pswd { get; set; } // Пароль, не проверяем в данном контексте
         }
     }
 }
