@@ -58,9 +58,12 @@ namespace PR67_VP.Pages
 
                         if (dataItem != null)
                         {
+                            string itemPatronymic = "";
                             string itemName = dataItem.WorkerSurname.ToLower();
                             string itemSurname = dataItem.WorkerName.ToLower();
-                            string itemPatronymic = dataItem.WorkerPatronymic.ToLower();
+                            if(dataItem.WorkerPatronymic != null){
+                                itemPatronymic = dataItem.WorkerPatronymic.ToLower();
+                            }
                             string itemWLogin = dataItem.w_login.ToLower();
 
                             return itemName.Contains(searchText) ||
