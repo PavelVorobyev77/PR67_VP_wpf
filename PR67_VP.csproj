@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mailbox.cs" />
     <Compile Include="model\Gender.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -112,6 +113,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\NewPasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AddWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Client.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ConfirmWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Workers_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PasswordRecoveryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -207,6 +220,9 @@
     <Compile Include="model\Workers.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\NewPasswordWindow.xaml.cs">
+      <DependentUpon>NewPasswordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AddWorker.xaml.cs">
       <DependentUpon>AddWorker.xaml</DependentUpon>
     </Compile>
@@ -218,6 +234,9 @@
     </Compile>
     <Compile Include="Pages\Client.xaml.cs">
       <DependentUpon>Client.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ConfirmWindow.xaml.cs">
+      <DependentUpon>ConfirmWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EditWorker.xaml.cs">
       <DependentUpon>EditWorker.xaml</DependentUpon>
@@ -233,6 +252,9 @@
     </Compile>
     <Compile Include="Pages\Workers_Page.xaml.cs">
       <DependentUpon>Workers_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PasswordRecoveryWindow.xaml.cs">
+      <DependentUpon>PasswordRecoveryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

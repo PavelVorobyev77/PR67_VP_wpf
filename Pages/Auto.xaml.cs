@@ -112,7 +112,51 @@ namespace PR67_VP.Pages
                 {
                     BlockLoginButton();
                 }
+
+                if (worker != null)
+                {
+                    if (worker.TwoFactorAuth == 1)
+                    {
+                        string userEmail = db.Workers.FirstOrDefault(w => w.ID_Worker == worker.ID_Worker)?.w_login;
+                        string confirmationCode = null;
+
+                        if (userEmail != null)
+                        {
+                            if (userEmail.Contains("@yandex.ru"))
+                            {
+                                //confirmationCode = YandexMailSender.SendMailYandex(userEmail);
+                            }
+                            else if (userEmail.Contains("@mail.ru"))
+                            {
+                                confirmationCode = MailRuMailSender.SendMailRu(userEmail);
+                            }
+                            else if (userEmail.Contains("@gmail.com"))
+                            {
+                                //confirmationCode = GmailSender.SendGMail(userEmail);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Адрес электронной почты пользователя не найден.");
+                            return;
+                        }
+
+                        ConfirmWindow confirmWindow = new ConfirmWindow(confirmationCode);
+                        bool? result = confirmWindow.ShowDialog();
+
+                        if (result == true)
+                        {
+                            GetWelcomeMessage(worker);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте еще раз.");
+                        }
+                    }
+                    return;
+                }
             }
+
         }
 
         private string GetWelcomeMessage(Workers worker)
@@ -218,6 +262,12 @@ namespace PR67_VP.Pages
                     NavigationService.Navigate(new Client { WelcomeMessage = welcomeMessage });
                     break;
             }
+        }
+
+        private void btnforget_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordRecoveryWindow passwordRecoveryWindow = new PasswordRecoveryWindow();
+            passwordRecoveryWindow.Show();
         }
     }
 }

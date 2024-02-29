@@ -144,6 +144,7 @@
           <Property Name="phoneNumber" Type="varchar" MaxLength="50" />
           <Property Name="w_login" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="w_pswd" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="TwoFactorAuth" Type="int" />
         </EntityType>
         <Association Name="FK__Additiona__Objec__4316F928">
           <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
@@ -531,6 +532,7 @@
           <NavigationProperty Name="Role" Relationship="Self.FK_Workers_Role" FromRole="Workers" ToRole="Role" />
           <Property Name="ID_Gender" Type="Int32" />
           <NavigationProperty Name="Gender" Relationship="VP_PMModel.FK_Workers_Gender" FromRole="Workers" ToRole="Gender" />
+          <Property Name="TwoFactorAuth" Type="Int32" />
         </EntityType>
         <Association Name="FK__Additiona__Objec__4316F928">
           <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
@@ -905,6 +907,7 @@
           <EntitySetMapping Name="Workers">
             <EntityTypeMapping TypeName="VP_PMModel.Workers">
               <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="TwoFactorAuth" ColumnName="TwoFactorAuth" />
                 <ScalarProperty Name="ID_Gender" ColumnName="ID_Gender" />
                 <ScalarProperty Name="ID_Worker" ColumnName="ID_Worker" />
                 <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />

@@ -13,14 +13,15 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="237"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="304" Width="326">
+        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="318" Width="290">
             <TextBlock Text="Логин:" Width="224"/>
             <TextBox Name="txtLogin" Width="224"/>
             <TextBlock Text="Пароль:" Width="224"/>
             <PasswordBox x:Name="txtPassword" Width="224"></PasswordBox>
             <TextBlock Name="textBlockCaptcha" Width="220"/>
-            <TextBox Name="txtCaptcha" Width="224"/>
+            <TextBox x:Name="txtCaptcha" Width="224"/>
             <TextBlock x:Name="seconds" Width="222" Foreground="#FF0000"/>
+            <Button x:Name="btnforget" Content="Забыл пароль" Click="btnforget_Click" Background="White" Width="156" BorderThickness="0,0,0,0" Height="32"/>
             <StackPanel Orientation="Horizontal" Height="80" HorizontalAlignment="Center">
                 <Button Name="btnEnterGuest" Margin="5, 15, 5, 5" Content="Войти как гость" Click="btnEnterGuest_Click"/>
                 <Button Name="btnEnter" Margin="5, 15, 5, 5" Content="Войти" Click="btnEnter_Click"/>
