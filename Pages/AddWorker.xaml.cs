@@ -38,7 +38,7 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Workers.AddWorkersValidation newWorker = new Workers.AddWorkersValidation
+            Workers newWorker = new Workers
             {
                 WorkerName = txtWorkerName.Text,
                 WorkerSurname = txtWorkerSurname.Text,

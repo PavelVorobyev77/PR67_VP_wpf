@@ -25,12 +25,7 @@
         </Grid>
 
         <StackPanel Grid.Row="1" Margin="10">
-            <StackPanel Orientation="Horizontal" Height="42">
-                <Label Content="ID: *" Width="156"/>
-                <TextBox x:Name="txtId" Width="187" Text="{Binding ID_Worker}" Height="32"/>
 
-            </StackPanel>
-            
             <StackPanel Orientation="Horizontal" Height="42">
                 <Label Content="Фамилия: *" Width="156"/>
                 <TextBox x:Name="txtWorkerSurname" Margin="5,0,0,0" Width="186" Text="{Binding WorkerSurname}" Height="32"/>

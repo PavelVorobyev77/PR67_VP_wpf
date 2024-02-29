@@ -64,7 +64,6 @@ namespace PR67_VP.Pages
 
         private void CleanButton_Click(object sender, RoutedEventArgs e)
         {
-            txtId.Text = string.Empty;
             txtWorkerName.Text = string.Empty;
             txtWorkerSurname.Text = string.Empty;
             txtWorkerPatronymic.Text = string.Empty;
@@ -86,38 +85,32 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!int.TryParse(txtId.Text, out int idWorker) || idWorker <= 0)
+            Workers editedWorker = new Workers()
             {
-                MessageBox.Show("Введите корректное числовое значение для ID.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                WorkerName = txtWorkerName.Text,
+                WorkerSurname = txtWorkerSurname.Text,
+                WorkerPatronymic = txtWorkerPatronymic.Text,
+                phoneNumber = txtPhoneNumber.Text,
+                w_login = txtLogin.Text,
+                w_pswd = txtPassword.Text
+            };
+
+            // Получение ошибок валидации
+            var validationContext = new ValidationContext(editedWorker, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+            Validator.TryValidateObject(editedWorker, validationContext, validationResults, validateAllProperties: true);
+
+            if (validationResults.Any())
+            {
+                string errorMessages = string.Join("\n", validationResults.Select(r => r.ErrorMessage));
+                MessageBox.Show(errorMessages, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            Workers selectedWorker = context.Workers.FirstOrDefault(w => w.ID_Worker == idWorker);
+            Workers selectedWorker = context.Workers.FirstOrDefault(w => w.ID_Worker == Worker.ID_Worker);
 
             if (selectedWorker != null)
             {
-                EditWorkersValidation editedWorker = new EditWorkersValidation
-                {
-                    WorkerName = txtWorkerName.Text,
-                    WorkerSurname = txtWorkerSurname.Text,
-                    WorkerPatronymic = txtWorkerPatronymic.Text,
-                    phoneNumber = txtPhoneNumber.Text,
-                    w_login = txtLogin.Text,
-                    w_pswd = txtPassword.Text
-                };
-
-                // Получение ошибок валидации
-                var validationContext = new ValidationContext(editedWorker, serviceProvider: null, items: null);
-                var validationResults = new List<ValidationResult>();
-                Validator.TryValidateObject(editedWorker, validationContext, validationResults, validateAllProperties: true);
-
-                if (validationResults.Any())
-                {
-                    string errorMessages = string.Join("\n", validationResults.Select(r => r.ErrorMessage));
-                    MessageBox.Show(errorMessages, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
                 selectedWorker.WorkerName = editedWorker.WorkerName;
                 selectedWorker.WorkerSurname = editedWorker.WorkerSurname;
                 selectedWorker.WorkerPatronymic = editedWorker.WorkerPatronymic;
@@ -148,9 +141,9 @@ namespace PR67_VP.Pages
 
             if (result == MessageBoxResult.Yes)
             {
-                int workerId;
+                int workerId = Worker.ID_Worker;
 
-                if (int.TryParse(txtId.Text, out workerId))
+                if (workerId > 0)
                 {
                     Workers selectedWorker = context.Workers.FirstOrDefault(w => w.ID_Worker == workerId);
 
