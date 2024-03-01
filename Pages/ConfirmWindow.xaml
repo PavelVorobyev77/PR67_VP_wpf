@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         Title="ConfirmWindow" Height="304" Width="356">
     <Grid>
-        <StackPanel Margin="1,0,-1,0"/>
-        <TextBlock Text="Введите код подтверждения:" Margin="77,58,77,211"/>
-        <TextBox x:Name="CodeTextBox" Margin="58,88,58,179"/>
-        <Button Content="Подтвердить" Click="ConfirmButton_Click" Margin="119,124,117,124"/>
+        <StackPanel Margin="1,50,1,0">
+            <TextBlock Text="Введите код подтверждения:" Width="200"/>
+            <TextBox x:Name="CodeTextBox" Width="198"/>
+            <Button Content="Подтвердить" Click="ConfirmButton_Click" Width="200"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

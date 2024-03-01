@@ -35,7 +35,7 @@ namespace PR67_VP
 
             if (newPassword != confirmPassword)
             {
-                MessageBox.Show("Пароли не совпадают. Пожалуйста, попробуйте снова.");
+                MessageBox.Show("Пароли не совпадают. Пожалуйста, попробуйте снова!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -52,18 +52,18 @@ namespace PR67_VP
 
                     if (worker != null)
                     {
-                        worker.w_pswd = newPassword;
+                        worker.w_pswd = hash.HashPassword(newPassword);
                         bd.SaveChanges();
-                        Console.WriteLine("Пароль успешно изменен!");
+                        MessageBox.Show("Пароль успешно изменен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
-                        Console.WriteLine("Пользователь с таким email не найден!");
+                        MessageBox.Show("Пользователь с таким email не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Ошибка при изменении пароля: " + ex.Message);
+                    MessageBox.Show("Ошибка при изменении пароля: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

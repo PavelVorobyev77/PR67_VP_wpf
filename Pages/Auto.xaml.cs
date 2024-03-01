@@ -78,7 +78,7 @@ namespace PR67_VP.Pages
         {
             if (!IsAccessAllowed())
             {
-                MessageBox.Show("Кнопка входа заблокирована. Подождите, пока не истечет время блокировки.");
+                MessageBox.Show("Кнопка входа заблокирована. Подождите, пока не истечет время блокировки.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -105,7 +105,7 @@ namespace PR67_VP.Pages
                 {
                     countUnsuccessful++;
                     GenerateCaptcha();
-                    MessageBox.Show("Вы ввели неверный логин или пароль! Введите капчу для продолжения.");
+                    MessageBox.Show("Вы ввели неверный логин или пароль! Введите капчу для продолжения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 if (countUnsuccessful >= 3)
@@ -122,22 +122,14 @@ namespace PR67_VP.Pages
 
                         if (userEmail != null)
                         {
-                            if (userEmail.Contains("@yandex.ru"))
-                            {
-                                //confirmationCode = YandexMailSender.SendMailYandex(userEmail);
-                            }
-                            else if (userEmail.Contains("@mail.ru"))
+                            if (userEmail.Contains("@mail.ru"))
                             {
                                 confirmationCode = MailRuMailSender.SendMailRu(userEmail);
-                            }
-                            else if (userEmail.Contains("@gmail.com"))
-                            {
-                                //confirmationCode = GmailSender.SendGMail(userEmail);
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Адрес электронной почты пользователя не найден.");
+                            MessageBox.Show("Адрес электронной почты пользователя не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
 
@@ -150,7 +142,7 @@ namespace PR67_VP.Pages
                         }
                         else
                         {
-                            MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте еще раз.");
+                            MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте еще раз!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     return;

@@ -10,5 +10,7 @@
 
     <Grid>
         <TextBlock x:Name="welcomeMessageTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Text="{Binding WelcomeMessage}" Width="510" />
+        <Button Content="Список сотрудников" HorizontalAlignment="Left" Margin="74,106,0,0" VerticalAlignment="Top" Click="Button_Click" Width="156"/>
+
     </Grid>
 </Page>

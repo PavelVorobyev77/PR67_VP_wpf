@@ -33,12 +33,12 @@ namespace PR67_VP.Pages
             if (enteredCode == expectedCode)
             {
                 DialogResult = true;
-                MessageBox.Show("Код подтверждения верный.");
+                MessageBox.Show("Код подтверждения верный!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }
             else
             {
-                MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте еще раз.");
+                MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте еще раз!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

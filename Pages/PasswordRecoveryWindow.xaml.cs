@@ -31,24 +31,14 @@ namespace PR67_VP
         {
             userEmail = txtUsernameOrEmail.Text;
 
-            if (userEmail.Contains("@yandex.ru"))
-            {
-                /*generatedCode = YandexMailSender.SendMailYandex(userEmail);
-                MessageBox.Show("Код подтверждения отправлен на вашу почту.");*/
-            }
-            else if (userEmail.Contains("@mail.ru"))
+            if (userEmail.Contains("@mail.ru"))
             {
                 generatedCode = MailRuMailSender.SendMailRu(userEmail);
                 MessageBox.Show("Код подтверждения отправлен на вашу почту.");
             }
-            else if (userEmail.Contains("@gmail.com"))
-            {
-                /*generatedCode = GmailSender.SendGMail(userEmail);
-                MessageBox.Show("Код подтверждения отправлен на вашу почту.");*/
-            }
             else
             {
-                MessageBox.Show("Указанный почтовый сервис не поддерживается");
+                MessageBox.Show("Указанный почтовый сервис не поддерживается!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Confirm_Click(object sender, RoutedEventArgs e)
@@ -63,7 +53,7 @@ namespace PR67_VP
             }
             else
             {
-                MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте снова.");
+                MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте снова.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private bool ValidateConfirmationCode(string enteredCode, string generatedCode)
