@@ -54,7 +54,7 @@ namespace PR67_VP.Pages
                         txtLogin.Text = worker.w_login;
                         txtPassword.Text = worker.w_pswd;
                         context.Entry(worker).State = EntityState.Modified;
-                        MessageBox.Show("great");
+                        //MessageBox.Show("great");
                     }
                     else
                     {

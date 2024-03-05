@@ -38,13 +38,16 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            int twoFactorAuthValue = chbTwoFactorAuth.IsChecked == true ? 1 : 0; // Получаем значение для TwoFactorAuth: 1 если галочка установлена, иначе 0
+
             Workers newWorker = new Workers
             {
                 WorkerName = txtWorkerName.Text,
                 WorkerSurname = txtWorkerSurname.Text,
                 phoneNumber = txtPhoneNumber.Text,
                 w_login = txtLogin.Text,
-                w_pswd = hash.HashPassword(txtPswd.Text)
+                w_pswd = hash.HashPassword(txtPswd.Text),
+                TwoFactorAuth = twoFactorAuthValue
             };
 
             // Получение ошибок валидации
@@ -67,7 +70,8 @@ namespace PR67_VP.Pages
                     WorkerSurname = newWorker.WorkerSurname,
                     phoneNumber = newWorker.phoneNumber,
                     w_login = newWorker.w_login,
-                    w_pswd = newWorker.w_pswd
+                    w_pswd = newWorker.w_pswd,
+                    TwoFactorAuth = newWorker.TwoFactorAuth
                 });
 
                 context.SaveChanges();

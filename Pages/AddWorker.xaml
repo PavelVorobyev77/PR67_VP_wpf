@@ -5,12 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PR67_VP.Pages"
       mc:Ignorable="d"
-      Title="AddWorker" Background="White" Height="591" Width="795">
+      Title="AddWorker" Background="White" Height="676" Width="822">
 
-    <Grid>
+    <Grid Margin="0,0,-20,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="314"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -25,7 +25,7 @@
             <Button Content="Добавить фото" Click="AddPhotoButton_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Height="36" Margin="10,0,0,0" Grid.Column="1"/>
         </Grid>
 
-        <StackPanel Grid.Row="1" Margin="10">
+        <StackPanel Grid.Row="1" Margin="10,10,10,10">
 
             <StackPanel Orientation="Horizontal" Height="42">
                 <Label Content="Фамилия: *" Width="156"/>
@@ -56,13 +56,18 @@
                 <Label Content="Пароль: *" Width="156"/>
                 <TextBox x:Name="txtPswd" Margin="5,0,0,0" Width="187" Text="{Binding w_pswd}" Height="32"/>
             </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Height="42">
+                <Label Content="Двухфакторная аутентификация:" Width="239"/>
+                <CheckBox x:Name="chbTwoFactorAuth" IsChecked="{Binding TwoFactorAuth}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="16" Width="16" Margin="5,0,0,0"/>
+            </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="525,0,0,0" Height="50" Width="260">
             <Button Content="Сохранить" Click="SaveButton_Click" Margin="0,0,10,0"/>
             <Button Content="Очистить" Click="CleanButton_Click"/>
         </StackPanel>
 
-        <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="10,0,0,65"><Run Text="*"/><Run Text=" Поля которые должны обязательно быть заполненными"/></TextBlock>
+        <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="10,0,21,117"><Run Text="*"/><Run Text=" Поля которые должны обязательно быть заполненными"/></TextBlock>
     </Grid>
 </Page>
