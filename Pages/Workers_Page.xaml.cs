@@ -48,10 +48,12 @@ namespace PR67_VP.Pages
             {
                 if (string.IsNullOrWhiteSpace(searchText))
                 {
-                    view.Filter = null;
+                    view.Filter = null; //Очистка фильтра, если поле поиска пустое
                 }
                 else
                 {
+                    //Устанавливается фильтр для поиска по нескольким полям объекта Workers.
+                     
                     view.Filter = item =>
                     {
                         Workers dataItem = item as Workers;
@@ -66,6 +68,9 @@ namespace PR67_VP.Pages
                             }
                             string itemWLogin = dataItem.w_login.ToLower();
 
+                            /*
+                             * Поиск по нескольким полям: фамилии, имени, отчеству и логину.
+                             */
                             return itemName.Contains(searchText) ||
                                    itemSurname.Contains(searchText) ||
                                    itemPatronymic.Contains(searchText) ||
@@ -80,6 +85,9 @@ namespace PR67_VP.Pages
 
         private void ApplySorting()
         {
+            /*
+            * Применение сортировки к списку Workers по выбранному параметру и направлению.
+            */
             ICollectionView view = CollectionViewSource.GetDefaultView(Workers);
 
             if (view != null)
@@ -107,6 +115,10 @@ namespace PR67_VP.Pages
             NavigationService?.Navigate(new AddWorker());
         }
 
+        /*
+         * Обработчик двойного щелчка по элементу списка Workers.
+         * Открывает окно редактирования выбранного работника.
+         */
         private void LViewProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 

@@ -28,6 +28,10 @@ namespace PR67_VP.Pages
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            /*
+             * Получение введенного кода из текстового поля.
+             * Удаление пробелов из начала и конца строки.
+             */
             string enteredCode = CodeTextBox.Text.Trim();
 
             if (enteredCode == expectedCode)

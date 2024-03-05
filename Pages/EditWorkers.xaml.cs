@@ -74,9 +74,11 @@ namespace PR67_VP.Pages
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
         {
+            // Создание диалогового окна для выбора изображения.
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Изображения (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|Все файлы (*.*)|*.*";
 
+            // Отображение диалогового окна и установка выбранного изображения как источника для элемента Image.
             if (openFileDialog.ShowDialog() == true)
             {
                 imgPhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName));
@@ -87,6 +89,7 @@ namespace PR67_VP.Pages
         {
             int twoFactorAuthValue = chbTwoFactorAuth.IsChecked == true ? 1 : 0; // Получаем значение для TwoFactorAuth: 1 если галочка установлена, иначе 0
 
+            // Создание объекта editedWorker с новыми данными из полей ввода.
             Workers editedWorker = new Workers()
             {
                 WorkerName = txtWorkerName.Text,
@@ -98,20 +101,32 @@ namespace PR67_VP.Pages
                 TwoFactorAuth = twoFactorAuthValue
             };
 
-            // Получение ошибок валидации
+            /*
+            * Обработка ошибок валидации:
+            *  - Если присутствуют ошибки валидации:
+            *      - Объединяются все сообщения об ошибках в одну строку.
+            *      - Отображается сообщение об ошибке с объединенными сообщениями.
+            */
             var validationContext = new ValidationContext(editedWorker, serviceProvider: null, items: null);
             var validationResults = new List<ValidationResult>();
             Validator.TryValidateObject(editedWorker, validationContext, validationResults, validateAllProperties: true);
 
+            // Проверка наличия ошибок валидации и вывод сообщения об ошибках при их обнаружении
             if (validationResults.Any())
             {
                 string errorMessages = string.Join("\n", validationResults.Select(r => r.ErrorMessage));
                 MessageBox.Show(errorMessages, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
+            // Поиск сотрудника в базе данных для редактирования
             Workers selectedWorker = context.Workers.FirstOrDefault(w => w.ID_Worker == Worker.ID_Worker);
-
+            /*
+            * Если работник найден:
+            *  - Обновляются свойства работника значениями из нового объекта.
+            *  - Если пароль был отредактирован:
+            *      - Хешируется новый пароль с помощью объекта hash (предположительно, внедренная зависимость).
+            *      - Обновляется пароль работника хешированным значением.
+            */
             if (selectedWorker != null)
             {
                 selectedWorker.WorkerName = editedWorker.WorkerName;

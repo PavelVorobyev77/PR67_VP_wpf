@@ -24,22 +24,25 @@ namespace PR67_VP.Pages
     /// <summary>
     /// Логика взаимодействия для Auto.xaml
     /// </summary>
+
     public partial class Auto : Page
     {
-        private int countUnsuccessful = 0;
-        private string captcha = string.Empty;
-        private bool isButtonBlocked = false;
-        private int countdownDuration = 10;
-        private DispatcherTimer countdownTimer;
-        private int z = 0;
+        private int countUnsuccessful = 0; // Счетчик неудачных попыток входа
+        private string captcha = string.Empty; // Переменная для хранения капчи
+        private bool isButtonBlocked = false; // блокировка кнопки
+        private int countdownDuration = 10; // Длительность блокировки в секундах
+        private DispatcherTimer countdownTimer; // Таймер для отсчета времени
+        private int z = 0; // Переменная для отслеживания времени блокировки
 
         public Auto()
         {
             InitializeComponent();
 
+            // Скрываем элементы для ввода капчи при инициализации
             txtCaptcha.Visibility = Visibility.Hidden;
             textBlockCaptcha.Visibility = Visibility.Hidden;
 
+            // Инициализация таймера обратного отсчета
             countdownTimer = new DispatcherTimer();
             countdownTimer.Interval = new TimeSpan(0, 0, 1);
             countdownTimer.Tick += CountdownTimer_Tick;
@@ -47,9 +50,14 @@ namespace PR67_VP.Pages
 
         private void CountdownTimer_Tick(object sender, EventArgs e)
         {
+            /* 
+            * Логика обновления отображаемого времени и разблокировки формы
+            * Рассчитываем оставшееся время блокировки и обновляем отображаемое сообщение
+            */
             int remainingSeconds = countdownDuration - z;
             if (remainingSeconds > 0)
             {
+                // Если время блокировки еще не истекло, обновляем текстовое сообщение с обратным отсчетом
                 seconds.Text = $"Вход заблокирован, попробуйте\nснова, через: {remainingSeconds} секунд";
                 z++;
 
@@ -57,6 +65,7 @@ namespace PR67_VP.Pages
             }
             else
             {
+                /* Если время блокировки истекло, останавливаем таймер, разблокируем элементы управления и сбрасываем состояние */
                 countdownTimer.Stop();
                 isButtonBlocked = false;
                 btnEnter.IsEnabled = true;
@@ -65,7 +74,7 @@ namespace PR67_VP.Pages
                 txtPassword.IsEnabled = true;
                 txtCaptcha.IsEnabled = true;
                 z = 0;
-                seconds.Text = null;
+                seconds.Text = null; // Сбрасываем текст сообщения
             }
         }
 
@@ -76,8 +85,13 @@ namespace PR67_VP.Pages
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
+            /* 
+            * Логика входа, если все ввели правильно, то вход выполнен, иначе нет
+            */
+            // Проверяем разрешен ли доступ
             if (!IsAccessAllowed())
             {
+                // Если доступ заблокирован, выводим сообщение об ошибке
                 MessageBox.Show("Кнопка входа заблокирована. Подождите, пока не истечет время блокировки.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -90,11 +104,12 @@ namespace PR67_VP.Pages
 
             using (Entities1 db = new Entities1())
             {
+                // Пытаемся найти пользователя в базе данных по введенному логину и хэшированному паролю
                 Workers worker = db.Workers.FirstOrDefault(p => p.w_login == login && p.w_pswd == hashedPassword);
 
                 if (worker != null)
                 {
-                    // Получение приветственного сообщения с указанием времени суток
+                    // Если пользователь найден, выводим персонализированное приветственное сообщение и загружаем форму
                     string welcomeMessage = GetWelcomeMessage(worker);
                     MessageBox.Show(welcomeMessage);
                     countUnsuccessful = 0;
@@ -103,11 +118,12 @@ namespace PR67_VP.Pages
                 }
                 else
                 {
+                    // Если пользователь не найден, увеличиваем счетчик неудачных попыток, генерируем CAPTCHA и выводим сообщение об ошибке
                     countUnsuccessful++;
                     GenerateCaptcha();
                     MessageBox.Show("Вы ввели неверный логин или пароль! Введите капчу для продолжения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
+                // Проверяем, достигнут ли лимит неудачных попыток для блокировки кнопки входа
                 if (countUnsuccessful >= 3)
                 {
                     BlockLoginButton();
@@ -115,6 +131,7 @@ namespace PR67_VP.Pages
 
                 if (worker != null)
                 {
+                    // Проверяем, включена ли у пользователя двухфакторная аутентификация
                     if (worker.TwoFactorAuth == 1)
                     {
                         string userEmail = db.Workers.FirstOrDefault(w => w.ID_Worker == worker.ID_Worker)?.w_login;
@@ -124,6 +141,7 @@ namespace PR67_VP.Pages
                         {
                             if (userEmail.Contains("@mail.ru"))
                             {
+                                // Отправляем код подтверждения на электронную почту
                                 confirmationCode = MailRuMailSender.SendMailRu(userEmail);
                             }
                         }
@@ -132,7 +150,7 @@ namespace PR67_VP.Pages
                             MessageBox.Show("Адрес электронной почты пользователя не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
-
+                        // Открываем окно подтверждения и обрабатываем результат
                         ConfirmWindow confirmWindow = new ConfirmWindow(confirmationCode);
                         bool? result = confirmWindow.ShowDialog();
 
@@ -210,7 +228,11 @@ namespace PR67_VP.Pages
             txtCaptcha.Visibility = Visibility.Visible;
 
             Random random = new Random();
-            int length = random.Next(5, 10);
+            int length = random.Next(5, 10); //Определяет желаемую длину кода капчи (от 5 до 10 символов)
+            /*
+            * Определяет строку, содержащую все возможные символы для кода капчи
+            * Включает как строчные, так и прописные буквы
+            */
             string captchaCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string generatedCaptcha = string.Empty;
 

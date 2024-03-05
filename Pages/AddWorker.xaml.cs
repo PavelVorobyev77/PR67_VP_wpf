@@ -50,7 +50,12 @@ namespace PR67_VP.Pages
                 TwoFactorAuth = twoFactorAuthValue
             };
 
-            // Получение ошибок валидации
+            /*
+            * Обработка ошибок валидации:
+            *  - Если присутствуют ошибки валидации:
+            *      - Объединяются все сообщения об ошибках в одну строку.
+            *      - Отображается сообщение об ошибке с объединенными сообщениями.
+            */
             var validationContext = new ValidationContext(newWorker, serviceProvider: null, items: null);
             var validationResults = new List<ValidationResult>();
             Validator.TryValidateObject(newWorker, validationContext, validationResults, validateAllProperties: true);
@@ -100,6 +105,7 @@ namespace PR67_VP.Pages
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
         {
+            // Создание диалогового окна для выбора изображения.
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Изображения (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|Все файлы (*.*)|*.*";
 
