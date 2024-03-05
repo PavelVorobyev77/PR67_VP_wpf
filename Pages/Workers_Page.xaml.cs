@@ -144,6 +144,16 @@ namespace PR67_VP.Pages
             Workers_Page newWorkerPage = new Workers_Page();
             NavigationService.Navigate(newWorkerPage);
         }
+
+        private void btnPrintList_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() == true)
+            {
+                IDocumentPaginatorSource idp = doc;
+                pd.PrintDocument(idp.DocumentPaginator, Title);
+            } 
+        }
     }
 }
 
