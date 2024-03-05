@@ -39,6 +39,8 @@ namespace PR67_VP.model
 
         //[Required(ErrorMessage = "Пароль является обязательным полем.")]
         public string w_pswd { get; set; }
+        
+        public byte[] Image { get; set; }
         public Nullable<int> ID_Gender { get; set; }
         public Nullable<int> TwoFactorAuth { get; set; }
     
