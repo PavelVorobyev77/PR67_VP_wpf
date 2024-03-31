@@ -141,6 +141,8 @@
           <Property Name="WorkerName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="WorkerSurname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="WorkerPatronymic" Type="varchar" MaxLength="50" />
+          <Property Name="serie_pass" Type="varchar" MaxLength="50" />
+          <Property Name="number_pass" Type="varchar" MaxLength="50" />
           <Property Name="phoneNumber" Type="varchar" MaxLength="50" />
           <Property Name="w_login" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="w_pswd" Type="varchar" MaxLength="150" Nullable="false" />
@@ -535,6 +537,8 @@
           <NavigationProperty Name="Gender" Relationship="VP_PMModel.FK_Workers_Gender" FromRole="Workers" ToRole="Gender" />
           <Property Name="TwoFactorAuth" Type="Int32" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="serie_pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="number_pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Additiona__Objec__4316F928">
           <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
@@ -909,6 +913,8 @@
           <EntitySetMapping Name="Workers">
             <EntityTypeMapping TypeName="VP_PMModel.Workers">
               <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="number_pass" ColumnName="number_pass" />
+                <ScalarProperty Name="serie_pass" ColumnName="serie_pass" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="TwoFactorAuth" ColumnName="TwoFactorAuth" />
                 <ScalarProperty Name="ID_Gender" ColumnName="ID_Gender" />

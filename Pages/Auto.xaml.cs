@@ -89,12 +89,12 @@ namespace PR67_VP.Pages
             * Логика входа, если все ввели правильно, то вход выполнен, иначе нет
             */
             // Проверяем разрешен ли доступ
-            if (!IsAccessAllowed())
+            /*if (!IsAccessAllowed())
             {
                 // Если доступ заблокирован, выводим сообщение об ошибке
                 MessageBox.Show("Кнопка входа заблокирована. Подождите, пока не истечет время блокировки.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
-            }
+            }*/
 
             string login = txtLogin.Text.Trim();
             string password = txtPassword.Password.Trim();
@@ -183,7 +183,7 @@ namespace PR67_VP.Pages
             {
                 greeting = "Добрый день";
             }
-            else if (currentHour >= 17 && currentHour <= 23)
+            else if (currentHour >= 17 && currentHour <= 24)
             {
                 greeting = "Добрый вечер";
             }
@@ -219,7 +219,7 @@ namespace PR67_VP.Pages
         private bool IsAccessAllowed()
         {
             int currentHour = DateTime.Now.Hour;
-            return currentHour >= 10 && currentHour < 23;
+            return currentHour >= 10 && currentHour < 2;
         }
 
         private void GenerateCaptcha()
