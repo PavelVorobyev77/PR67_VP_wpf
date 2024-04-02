@@ -69,7 +69,11 @@ namespace PR67_VP.Pages
             txtWorkerPatronymic.Text = string.Empty;
             txtPhoneNumber.Text = string.Empty;
             txtLogin.Text = string.Empty;
-            txtPassword.Text = string.Empty;
+            txtPswd.Text = string.Empty;
+
+            chbTwoFactorAuth.IsChecked = false;
+
+            cb.SelectedIndex = -1; // Очищаем выбранное значение
         }
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
@@ -97,7 +101,7 @@ namespace PR67_VP.Pages
                 WorkerPatronymic = txtWorkerPatronymic.Text,
                 phoneNumber = txtPhoneNumber.Text,
                 w_login = txtLogin.Text,
-                w_pswd = txtPassword.Text,
+                w_pswd = txtPswd.Text,
                 TwoFactorAuth = twoFactorAuthValue
             };
 
@@ -136,9 +140,9 @@ namespace PR67_VP.Pages
                 selectedWorker.w_login = editedWorker.w_login;
                 selectedWorker.TwoFactorAuth = editedWorker.TwoFactorAuth;
 
-                if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                if (!string.IsNullOrWhiteSpace(txtPswd.Text))
                 {
-                    string hashedPassword = hash.HashPassword(txtPassword.Text);
+                    string hashedPassword = hash.HashPassword(txtPswd.Text);
                     selectedWorker.w_pswd = hashedPassword;
                 }
 
@@ -151,6 +155,17 @@ namespace PR67_VP.Pages
                 {
                     MessageBox.Show($"Произошла ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void PrintList_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog pd = new PrintDialog();
+            if (pd.ShowDialog() == true)
+            {
+                FlowDocument flowdoc = Doc.Document as FlowDocument;
+                IDocumentPaginatorSource idp = flowdoc;
+                pd.PrintDocument(idp.DocumentPaginator, "Title");
             }
         }
 

@@ -4,9 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PR67_VP.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="458" d:DesignWidth="800"
-      Title="Workers" Background="White">
+      mc:Ignorable="d"
+      Title="Workers" Background="White" Height="639" Width="923">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -22,7 +21,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" TextChanged="txtSearch_TextChanged_1" Height="22"/>
+        <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,5,0" TextChanged="txtSearch_TextChanged_1" Height="22"/>
         <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="cmbSorting_SelectionChanged" Height="36">
             <ComboBoxItem Content="Без сортировки"/>
             <ComboBoxItem Content="Сортировка по имени (возрастание)" Tag="WorkerName,Ascending"/>

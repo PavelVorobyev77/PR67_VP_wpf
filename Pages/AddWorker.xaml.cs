@@ -52,10 +52,16 @@ namespace PR67_VP.Pages
             {
                 WorkerName = txtWorkerName.Text,
                 WorkerSurname = txtWorkerSurname.Text,
+                WorkerPatronymic = txtWorkerPatronymic.Text,
                 phoneNumber = txtPhoneNumber.Text,
+                serie_pass = txtseriePass.Text,
+                number_pass = txtnumPass.Text,
                 w_login = txtLogin.Text,
                 w_pswd = hash.HashPassword(txtPswd.Text),
-                TwoFactorAuth = twoFactorAuthValue
+                TwoFactorAuth = twoFactorAuthValue,
+                ID_Role = (int)ID_Role
+
+
             };
 
             /*
@@ -77,18 +83,11 @@ namespace PR67_VP.Pages
 
             try
             {
-                context.Workers.Add(new Workers
-                {
-                    WorkerName = newWorker.WorkerName,
-                    WorkerSurname = newWorker.WorkerSurname,
-                    phoneNumber = newWorker.phoneNumber,
-                    w_login = newWorker.w_login,
-                    w_pswd = newWorker.w_pswd,
-                    TwoFactorAuth = newWorker.TwoFactorAuth
-
-                });
+                context.Workers.Add(newWorker);
 
                 context.SaveChanges();
+
+                Contract(newWorker.serie_pass, newWorker.WorkerSurname, newWorker.WorkerName, newWorker.WorkerPatronymic, newWorker.number_pass, SelectedRoleName);
 
                 DialogResult = true;
 
@@ -148,7 +147,7 @@ namespace PR67_VP.Pages
                     myRange.Find.ClearFormatting();
                     myRange.Find.Execute(FindText: findText, ReplaceWith: replaceText, Replace: WdReplace.wdReplaceAll);
                 }
-                string newFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "trudovogo-dogovora.docx");
+                string newFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "contract_bob_theBuilder.docx");
                 wordDoc.SaveAs2(newFilePath);
                 MessageBox.Show("Документ успешно сохранен: " + newFilePath);
             }
@@ -169,8 +168,14 @@ namespace PR67_VP.Pages
             txtWorkerSurname.Text = string.Empty;
             txtWorkerPatronymic.Text = string.Empty;
             txtPhoneNumber.Text = string.Empty;
+            txtseriePass.Text = string.Empty;
+            txtnumPass.Text = string.Empty;     
             txtLogin.Text = string.Empty;
             txtPswd.Text = string.Empty;
+
+            chbTwoFactorAuth.IsChecked = false;
+
+            cb.SelectedIndex = -1; // Очищаем выбранное значение
         }
 
         private void PrintList_Click(object sender, RoutedEventArgs e)
