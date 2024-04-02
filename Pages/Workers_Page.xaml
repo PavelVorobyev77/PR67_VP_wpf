@@ -21,7 +21,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,5,0" TextChanged="txtSearch_TextChanged_1" Height="22"/>
+        <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="27,0,5,0" TextChanged="txtSearch_TextChanged_1" Height="22"/>
         <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="cmbSorting_SelectionChanged" Height="36">
             <ComboBoxItem Content="Без сортировки"/>
             <ComboBoxItem Content="Сортировка по имени (возрастание)" Tag="WorkerName,Ascending"/>

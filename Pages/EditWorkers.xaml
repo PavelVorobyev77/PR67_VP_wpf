@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PR67_VP.Pages"
         mc:Ignorable="d"
-        Title="EditWorkers" Height="800" Width="1000" MinWidth="1000" MinHeight="800">
+        Title="EditWorkers" Height="809" Width="1001" MinWidth="1001" MinHeight="809">
 
     <FlowDocumentReader Grid.ColumnSpan="3" Margin="5,5,5,5" Name="Doc">
         <FlowDocument Name="flowdoc">
