@@ -12,9 +12,9 @@
             <TextBlock Text="Логин:" Width="224"/>
             <TextBox Name="txtLogin" Width="224"/>
             <TextBlock Text="Пароль:" Width="224"/>
-            <PasswordBox x:Name="txtPassword" Width="224"></PasswordBox>
+            <PasswordBox x:Name="txtPassword" Width="224" Height="25"></PasswordBox>
             <TextBlock Name="textBlockCaptcha" Width="224"/>
-            <TextBox x:Name="txtCaptcha" Width="224"/>
+            <TextBox x:Name="txtCaptcha" Width="224" Height="27"/>
             <TextBlock x:Name="seconds" Width="224" Foreground="#FF0000"/>
             <Button x:Name="btnforget" Content="Забыл пароль?" Click="btnforget_Click" Height="32"/>
             <StackPanel Orientation="Horizontal" Height="80" HorizontalAlignment="Center">

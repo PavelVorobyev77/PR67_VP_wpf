@@ -27,6 +27,8 @@ namespace PR67_VP.Pages
     /// </summary>
     public partial class EditWorkers : Window
     {
+        private int? ID_Role;
+        private string SelectedRoleName;
         public ObservableCollection<Workers> Workers { get; set; }
         private Entities1 context;
         private Workers Worker;
@@ -38,7 +40,26 @@ namespace PR67_VP.Pages
             context = new Entities1();
             DataContext = this;
             LoadData(Worker.ID_Worker); // Вызов метода LoadData() для загрузки данных выбранного сотрудника
+            LoadRoles();
 
+        }
+
+        private void LoadRoles()
+        {
+            try
+            {
+                using (var context = new Entities1())
+                {
+                    var roles = context.Role.ToList();
+                    cbRoles.ItemsSource = roles;
+                    cbRoles.DisplayMemberPath = "RoleName";
+                    cbRoles.SelectedValuePath = "ID_Role";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке ролей: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Загрузка данных для указанного сотрудника
@@ -73,7 +94,7 @@ namespace PR67_VP.Pages
 
             chbTwoFactorAuth.IsChecked = false;
 
-            cb.SelectedIndex = -1; // Очищаем выбранное значение
+            cbRoles.SelectedIndex = -1; // Очищаем выбранное значение
         }
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
@@ -100,10 +121,13 @@ namespace PR67_VP.Pages
                 WorkerSurname = txtWorkerSurname.Text,
                 WorkerPatronymic = txtWorkerPatronymic.Text,
                 phoneNumber = txtPhoneNumber.Text,
+                serie_pass = txtseriePass.Text,
+                number_pass = txtnumPass.Text,
                 w_login = txtLogin.Text,
                 w_pswd = txtPswd.Text,
-                TwoFactorAuth = twoFactorAuthValue
-            };
+                TwoFactorAuth = twoFactorAuthValue,
+                ID_Role = (int)cbRoles.SelectedValue
+        };
 
             /*
             * Обработка ошибок валидации:
@@ -137,8 +161,11 @@ namespace PR67_VP.Pages
                 selectedWorker.WorkerSurname = editedWorker.WorkerSurname;
                 selectedWorker.WorkerPatronymic = editedWorker.WorkerPatronymic;
                 selectedWorker.phoneNumber = editedWorker.phoneNumber;
+                selectedWorker.serie_pass = editedWorker.serie_pass;
+                selectedWorker.number_pass = editedWorker.number_pass;
                 selectedWorker.w_login = editedWorker.w_login;
                 selectedWorker.TwoFactorAuth = editedWorker.TwoFactorAuth;
+                selectedWorker.ID_Role = (int)cbRoles.SelectedValue;
 
                 if (!string.IsNullOrWhiteSpace(txtPswd.Text))
                 {
@@ -165,8 +192,13 @@ namespace PR67_VP.Pages
             {
                 FlowDocument flowdoc = Doc.Document as FlowDocument;
                 IDocumentPaginatorSource idp = flowdoc;
-                pd.PrintDocument(idp.DocumentPaginator, "Title");
+                pd.PrintDocument(idp.DocumentPaginator, "Doc");
             }
+        }
+
+        private void cbRoles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

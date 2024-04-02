@@ -185,7 +185,7 @@ namespace PR67_VP.Pages
             {
                 FlowDocument flowDoc = Doc.Document as FlowDocument;
                 IDocumentPaginatorSource idp = flowdoc;
-                pd.PrintDocument(idp.DocumentPaginator, "Title");
+                pd.PrintDocument(idp.DocumentPaginator, "Doc");
             }
         }
 

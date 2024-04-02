@@ -39,7 +39,7 @@ namespace PR67_VP.model
         [RegularExpression(@"^[\w-]+(?:\.[\w-]+)*@[\w-]+(?:\.[\w-]+)*$", ErrorMessage = "Логин должен содержать только буквы, цифры, символы: _, -, и должен иметь формат электронной почты.")]
         public string w_login { get; set; }
 
-        [Required(ErrorMessage = "Пароль является обязательным полем.")]
+        //[Required(ErrorMessage = "Пароль является обязательным полем.")]
         public string w_pswd { get; set; }
         public Nullable<int> ID_Gender { get; set; }
         public Nullable<int> TwoFactorAuth { get; set; }
