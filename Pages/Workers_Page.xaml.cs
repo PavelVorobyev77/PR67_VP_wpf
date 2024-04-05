@@ -170,7 +170,7 @@ namespace PR67_VP.Pages
             ws.Cells[1, 4] = "Номер телефона";
             ws.Cells[1, 5] = "Серия паспорта";
             ws.Cells[1, 6] = "Номер паспорта";
-            // ws.Cells[1, 7] = "Название роли"; // Удаляем заголовок для роли
+            ws.Cells[1, 7] = "id роли";
             int row = 2;
             foreach (var worker in Workers)
             {
@@ -180,7 +180,7 @@ namespace PR67_VP.Pages
                 ws.Cells[row, 4] = worker.phoneNumber;
                 ws.Cells[row, 5] = worker.serie_pass;
                 ws.Cells[row, 6] = worker.number_pass;
-                // ws.Cells[row, 7] = role.RoleName; // Удаляем вывод роли
+                ws.Cells[row, 7] = worker.ID_Role;
                 row++;
             }
             try
