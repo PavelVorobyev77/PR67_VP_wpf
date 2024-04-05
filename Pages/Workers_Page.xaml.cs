@@ -16,6 +16,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Page = System.Windows.Controls.Page;
+using Microsoft.Office.Interop.Excel;
+using System.IO;
 
 
 namespace PR67_VP.Pages
@@ -23,6 +26,7 @@ namespace PR67_VP.Pages
     public partial class Workers_Page : Page
     {
         public ObservableCollection<Workers> Workers { get; set; }
+        public ObservableCollection<Role> Roles { get; set; }
         public Workers_Page()
         {
             InitializeComponent();
@@ -153,6 +157,43 @@ namespace PR67_VP.Pages
                 IDocumentPaginatorSource idp = doc;
                 pd.PrintDocument(idp.DocumentPaginator, Title);
             } 
+        }
+
+        private void Excel_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            Workbook wb = excel.Workbooks.Add(XlSheetType.xlWorksheet);
+            Worksheet ws = (Worksheet)excel.ActiveSheet;
+            ws.Cells[1, 1] = "Имя";
+            ws.Cells[1, 2] = "Фамилия";
+            ws.Cells[1, 3] = "Отчество";
+            ws.Cells[1, 4] = "Номер телефона";
+            ws.Cells[1, 5] = "Серия паспорта";
+            ws.Cells[1, 6] = "Номер паспорта";
+            // ws.Cells[1, 7] = "Название роли"; // Удаляем заголовок для роли
+            int row = 2;
+            foreach (var worker in Workers)
+            {
+                ws.Cells[row, 1] = worker.WorkerName;
+                ws.Cells[row, 2] = worker.WorkerSurname;
+                ws.Cells[row, 3] = worker.WorkerPatronymic;
+                ws.Cells[row, 4] = worker.phoneNumber;
+                ws.Cells[row, 5] = worker.serie_pass;
+                ws.Cells[row, 6] = worker.number_pass;
+                // ws.Cells[row, 7] = role.RoleName; // Удаляем вывод роли
+                row++;
+            }
+            try
+            {
+                string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Workers.xlsx");
+                wb.SaveAs(fileName);
+                excel.Quit();
+                MessageBox.Show("Данные экспортированы в Excel.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при сохранении файла Excel: " + ex.Message);
+            }
         }
     }
 }
