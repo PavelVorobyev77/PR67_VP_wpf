@@ -112,6 +112,13 @@ namespace PR67_VP.Pages
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // Проверяем, выбрана ли роль
+            if (ID_Role == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите роль перед сохранением данных.");
+                return; // Прекращаем выполнение метода, так как роль не выбрана
+            }
+
             int twoFactorAuthValue = chbTwoFactorAuth.IsChecked == true ? 1 : 0; // Получаем значение для TwoFactorAuth: 1 если галочка установлена, иначе 0
 
             // Создание объекта editedWorker с новыми данными из полей ввода.
