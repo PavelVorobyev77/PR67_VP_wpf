@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using hash_pswd;
+using Newtonsoft.Json;
 using PR67_VP.model;
 using PR67_VP.Pages;
 
@@ -83,91 +87,71 @@ namespace PR67_VP.Pages
             NavigationService.Navigate(new Client());
         }
 
-        private void btnEnter_Click(object sender, RoutedEventArgs e)
+
+        private async void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            /* 
-            * Логика входа, если все ввели правильно, то вход выполнен, иначе нет
-            */
-            // Проверяем разрешен ли доступ
-            /*if (!IsAccessAllowed())
-            {
-                // Если доступ заблокирован, выводим сообщение об ошибке
-                MessageBox.Show("Кнопка входа заблокирована. Подождите, пока не истечет время блокировки.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }*/
+
 
             string login = txtLogin.Text.Trim();
             string password = txtPassword.Password.Trim();
 
-            // Хэшируем введенный пароль
-            string hashedPassword = hash.HashPassword(password);
+            //string hashedPassword = hash.HashPassword(password);
 
-            using (Entities1 db = new Entities1())
+            // Создание объекта запроса
+            var request = new LoginRequest { Login = login, Password = password };
+            string jsonRequest = JsonConvert.SerializeObject(request);
+
+            using (var client = new HttpClient())
             {
-                // Пытаемся найти пользователя в базе данных по введенному логину и хэшированному паролю
-                Workers worker = db.Workers.FirstOrDefault(p => p.w_login == login && p.w_pswd == hashedPassword);
+                try
+                {
+                    // Установка базового адреса вашего API
+                    client.BaseAddress = new Uri("https://localhost:7235");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                if (worker != null)
-                {
-                    // Если пользователь найден, выводим персонализированное приветственное сообщение и загружаем форму
-                    string welcomeMessage = GetWelcomeMessage(worker);
-                    MessageBox.Show(welcomeMessage);
-                    countUnsuccessful = 0;
-                    LoadForm(worker.Role.RoleName, welcomeMessage);
+                    // Отправка POST-запроса на конечную точку API
+                    HttpResponseMessage response = await client.PostAsync("/api/Auto/login", new StringContent(jsonRequest, Encoding.UTF8, "application/json"));
 
-                }
-                else
-                {
-                    // Если пользователь не найден, увеличиваем счетчик неудачных попыток, генерируем CAPTCHA и выводим сообщение об ошибке
-                    countUnsuccessful++;
-                    GenerateCaptcha();
-                    MessageBox.Show("Вы ввели неверный логин или пароль! Введите капчу для продолжения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                // Проверяем, достигнут ли лимит неудачных попыток для блокировки кнопки входа
-                if (countUnsuccessful >= 3)
-                {
-                    BlockLoginButton();
-                }
-
-                if (worker != null)
-                {
-                    // Проверяем, включена ли у пользователя двухфакторная аутентификация
-                    if (worker.TwoFactorAuth == 1)
+                    // Обработка ответа API
+                    if (response.IsSuccessStatusCode)
                     {
-                        string userEmail = db.Workers.FirstOrDefault(w => w.ID_Worker == worker.ID_Worker)?.w_login;
-                        string confirmationCode = null;
+                        // Чтение и парсинг тела ответа
+                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        LoginResponse loginResponse = JsonConvert.DeserializeObject<LoginResponse>(jsonResponse);
 
-                        if (userEmail != null)
-                        {
-                            if (userEmail.Contains("@mail.ru"))
-                            {
-                                // Отправляем код подтверждения на электронную почту
-                                confirmationCode = MailRuMailSender.SendMailRu(userEmail);
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Адрес электронной почты пользователя не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                        // Открываем окно подтверждения и обрабатываем результат
-                        ConfirmWindow confirmWindow = new ConfirmWindow(confirmationCode);
-                        bool? result = confirmWindow.ShowDialog();
+                        // Пример: отображение приветственного сообщения или загрузка формы
+                        string welcomeMessage = $"Добро пожаловать, {loginResponse.Login}!";
+                        MessageBox.Show(welcomeMessage);
+                        countUnsuccessful = 0;
+                        LoadForm(loginResponse.Role, welcomeMessage);
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        // Обработка неавторизованного доступа
+                        MessageBox.Show("Вы ввели неверный логин или пароль! Введите капчу для продолжения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        countUnsuccessful++;
+                        GenerateCaptcha();
 
-                        if (result == true)
+                        // Проверка необходимости блокировки кнопки входа
+                        if (countUnsuccessful >= 3)
                         {
-                            GetWelcomeMessage(worker);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Введенный код неверный. Пожалуйста, попробуйте еще раз!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            BlockLoginButton();
                         }
                     }
-                    return;
+                    else
+                    {
+                        // Обработка других кодов состояния HTTP
+                        MessageBox.Show($"Ошибка входа: {response.StatusCode}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
         }
+
 
         private string GetWelcomeMessage(Workers worker)
         {
@@ -282,6 +266,19 @@ namespace PR67_VP.Pages
         {
             PasswordRecoveryWindow passwordRecoveryWindow = new PasswordRecoveryWindow();
             passwordRecoveryWindow.Show();
+        }
+
+        public class LoginRequest
+        {
+            public string Login { get; set; }
+            public string Password { get; set; }
+        }
+
+        public class LoginResponse
+        {
+            public string Login { get; set; }
+            public bool TwoFactorEnabled { get; set; }
+            public string Role { get; set; }
         }
     }
 }
